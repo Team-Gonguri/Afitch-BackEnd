@@ -1,6 +1,9 @@
 plugins {
     id 'java'
 }
+repositories {
+    mavenCentral()
+}
 bootJar{
     enabled=false
 }
@@ -8,8 +11,6 @@ jar{
     enabled=true
 }
 
-repositories {
-    mavenCentral()
-}
 dependencies {
+    runtimeOnly("mysql:mysql-connector-java")
 }

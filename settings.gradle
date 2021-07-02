@@ -1,4 +1,3 @@
 rootProject.name = 'backend'
-include("core")
-include 'core'
+include('core','auth:application','auth:domain')
 

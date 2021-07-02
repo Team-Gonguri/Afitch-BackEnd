@@ -1,22 +1,57 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.2'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.5.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
-
-group = 'com.gonguri'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.4.1")
+    implementation("io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE")
+}
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
-test {
-	useJUnitPlatform()
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.gonguri'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '11'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation 'org.springframework.boot:spring-boot-starter'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+    test {
+        useJUnitPlatform()
+    }
+}
+project(":core"){
+    dependencies{
+
+    }
+}
+project(":auth:domain"){
+    dependencies{
+        implementation project(":core")
+    }
+}
+project(":auth:application") {
+    dependencies {
+        implementation project(":core")
+        implementation project(":auth:domain")
+    }
 }
