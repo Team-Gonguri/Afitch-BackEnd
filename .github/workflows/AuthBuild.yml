@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    #우분투 최신버전
+
     runs-on: ubuntu-latest
 
     steps:
