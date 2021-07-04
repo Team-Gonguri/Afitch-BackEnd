@@ -1,0 +1,46 @@
+name: Auth Build Test
+
+on:
+  pull_request:
+    branches: [ develop, master ]
+    paths:
+      - 'core/**'
+      - 'auth/**'
+  push:
+    branches: [ develop, master ]
+    paths:
+      - 'core/**'
+      - 'auth/**'
+
+jobs:
+  build:
+    #우분투 최신버전
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Access to github repo
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Cache gradle modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Test Domain
+        run: ./gradlew :auth:domain:test
+
+      - name: Build Application
+        run: ./gradlew :auth:application:build  -x test
