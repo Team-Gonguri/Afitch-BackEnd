@@ -39,13 +39,19 @@ subprojects {
         useJUnitPlatform()
     }
 }
-project(":core"){
-    dependencies{
+project(":core") {
+    dependencies {
 
     }
 }
-project(":auth:domain"){
-    dependencies{
+project(":api") {
+    dependencies {
+        implementation project(":core")
+    }
+}
+project(":auth:domain") {
+    dependencies {
+        implementation project(":api")
         implementation project(":core")
     }
 }
@@ -53,5 +59,17 @@ project(":auth:application") {
     dependencies {
         implementation project(":core")
         implementation project(":auth:domain")
+    }
+}
+project(":community:domain") {
+    dependencies {
+        implementation project(":api")
+        implementation project(":core")
+    }
+}
+project(":community:application") {
+    dependencies {
+        implementation project(":core")
+        implementation project(":community:domain")
     }
 }
