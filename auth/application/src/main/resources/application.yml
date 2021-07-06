@@ -1,0 +1,20 @@
+server:
+  port: ${AUTH_SERVER_PORT}
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${AUTH_DATASOURCE_USERNAME}
+    url: ${AUTH_DATASOURCE_URL}
+    password: ${AUTH_DATASOURCE_PASSWORD}
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: create
+application:
+  jwt:
+    secret: ${JWT_SECRET}
