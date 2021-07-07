@@ -10,10 +10,7 @@ import com.editor.api.response.SignInResponse;
 import com.editor.service.AccountService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -53,4 +50,9 @@ public class AuthController {
         );
     }
 
+    @GetMapping("/id-duplicate")
+    @ApiOperation("Id 중복확인")
+    public boolean checkIdDuplicate(@RequestParam String id) {
+        return accountService.isIdDuplicate(id);
+    }
 }
