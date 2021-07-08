@@ -60,11 +60,15 @@ public class AccountService {
     }
 
     public String refresh(String refreshToken) {
-        if (jwtProvider.validateToken(refreshToken)) {
-            return jwtProvider.getToken(jwtProvider.getUserIdFromToken(refreshToken),
-                    jwtProvider.getRoleFromToken(refreshToken),
-                    TokenType.ACCESS);
-        } else
+        try {
+            if (jwtProvider.validateToken(refreshToken)) {
+                return jwtProvider.getToken(jwtProvider.getUserIdFromToken(refreshToken),
+                        jwtProvider.getRoleFromToken(refreshToken),
+                        TokenType.ACCESS);
+            } else
+                throw new RefreshTokenExpiredException();
+        } catch (Exception e) {
             throw new RefreshTokenExpiredException();
+        }
     }
 }

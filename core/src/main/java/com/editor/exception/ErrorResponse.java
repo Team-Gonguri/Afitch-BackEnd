@@ -11,10 +11,6 @@ public class ErrorResponse {
     private Date timeStamp;
 
 
-    public ErrorResponse(){
-
-    }
-
     public ErrorResponse(String message, String errorCode) {
         this.message = message;
         this.errorCode = errorCode;
