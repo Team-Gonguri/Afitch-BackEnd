@@ -1,11 +1,9 @@
 package com.editor.api.exception;
 
 import com.editor.exception.ErrorResponse;
-import com.editor.exceptions.RefreshTokenExpiredException;
+import com.editor.exceptions.InvalidRefreshTokenException;
 import com.editor.exceptions.WrongAccountInfoException;
-import org.hibernate.NonUniqueResultException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,7 +18,7 @@ public class AuthExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(RefreshTokenExpiredException.class)
+    @ExceptionHandler(InvalidRefreshTokenException.class)
     public ErrorResponse handlerRefreshTokenExpiredException(Exception e) {
         return new ErrorResponse(AuthExceptionType.INVALID_REFRESH.getMessage(), AuthExceptionType.INVALID_REFRESH.getCode());
     }

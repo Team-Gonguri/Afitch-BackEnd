@@ -1,6 +1,6 @@
 package com.editor.service;
 
-import com.editor.exceptions.RefreshTokenExpiredException;
+import com.editor.exceptions.InvalidRefreshTokenException;
 import com.editor.exceptions.WrongAccountInfoException;
 import com.editor.model.dto.SignInDto;
 import com.editor.model.dto.SignUpDto;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class AccountService {
+public class AuthService {
 
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
@@ -66,9 +66,9 @@ public class AccountService {
                         jwtProvider.getRoleFromToken(refreshToken),
                         TokenType.ACCESS);
             } else
-                throw new RefreshTokenExpiredException();
+                throw new InvalidRefreshTokenException();
         } catch (Exception e) {
-            throw new RefreshTokenExpiredException();
+            throw new InvalidRefreshTokenException();
         }
     }
 }
