@@ -51,32 +51,15 @@ project(":core") {
 
     }
 }
-project(":api") {
+project(":project:domain") {
     dependencies {
         implementation project(":core")
     }
 }
-project(":auth:domain") {
-    dependencies {
-        implementation project(":api")
-        implementation project(":core")
-    }
-}
-project(":auth:application") {
+project(":project:application") {
     dependencies {
         implementation project(":core")
-        implementation project(":auth:domain")
+        implementation project(":project:domain")
     }
 }
-project(":editor:domain") {
-    dependencies {
-        implementation project(":api")
-        implementation project(":core")
-    }
-}
-project(":editor:application") {
-    dependencies {
-        implementation project(":core")
-        implementation project(":editor:domain")
-    }
-}
+
