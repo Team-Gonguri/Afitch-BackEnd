@@ -5,12 +5,12 @@ on:
     branches: [ develop, master ]
     paths:
       - 'core/**'
-      - 'auth/**'
+      - 'project/**'
   push:
     branches: [ develop, master ]
     paths:
       - 'core/**'
-      - 'auth/**'
+      - 'project/**'
 
 jobs:
   build:
@@ -40,7 +40,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Test Domain
-        run: ./gradlew :auth:domain:test
+        run: ./gradlew :project:domain:test
 
       - name: Build Application
-        run: ./gradlew :auth:application:build  -x test
+        run: ./gradlew :project:application:build  -x test
