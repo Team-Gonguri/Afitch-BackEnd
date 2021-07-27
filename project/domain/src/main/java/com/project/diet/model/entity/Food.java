@@ -20,49 +20,52 @@ public class Food {
     @Column
     private String name;
 
+    @Column
+    private String foodCategory;
+
     /**
      * 1회 제공량
      */
     @Column
-    private int size;
+    private double size;
 
     /**
      * 1회 제공량 단위
      */
     @Column
-    private int unit;
+    private String unit;
 
     /**
      * 단백질 (g)
      */
     @Column
-    private int protein;
+    private double protein;
 
     /**
      * 지방 (g)
      */
     @Column
-    private int fat;
+    private double fat;
     /**
      * 탄수화물 (g)
      */
     @Column
-    private int carbohydrate;
+    private double carbohydrate;
 
     /**
      * 식이섬유 (g)
      */
     @Column
-    private int dietary_fiber;
+    private double dietary_fiber;
 
     /**
      * 칼슘 (mg)
      */
     @Column
-    private int calcium;
+    private double calcium;
 
     /**
      * 나트륨 (mg)
      */
-    private int salt;
+    private double salt;
 }
