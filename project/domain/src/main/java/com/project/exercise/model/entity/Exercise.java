@@ -1,10 +1,12 @@
 package com.project.exercise.model.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "exercise")
 public class Exercise {

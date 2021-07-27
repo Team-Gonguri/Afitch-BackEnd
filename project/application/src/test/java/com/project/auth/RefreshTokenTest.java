@@ -24,7 +24,7 @@ public class RefreshTokenTest extends AuthTestBase {
     @BeforeEach
     public void setUp() {
         validAccessToken = jwtProvider.getToken(1L, UserRole.ROLE_USER, TokenType.ACCESS);
-        validRefreshToken = jwtProvider.getToken(1L, UserRole.ROLE_SERVER, TokenType.REFRESH);
+        validRefreshToken = jwtProvider.getToken(1L, UserRole.ROLE_ADMIN, TokenType.REFRESH);
 
         expiredAccessToken = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTYyNTcyNDk2OSwiZXhwIjoxNjI1NzI0OTcwfQ.Fv-fptrtlYmVPl7bm6m-3w1MW8cT84d9RrS_UcPM2aA";
         expiredRefreshToken = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTYyNTcyNTEwNCwiZXhwIjoxNjI1NzI1MTA2fQ.IXoYXZlFK6SvxfqeVBUQfCu3IJdafAbKBi9_7RpsH94";
