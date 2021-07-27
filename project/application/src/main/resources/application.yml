@@ -1,11 +1,11 @@
 server:
-  port: ${AUTH_SERVER_PORT}
+  port: ${SERVER_PORT}
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${AUTH_DATASOURCE_USERNAME}
-    url: ${AUTH_DATASOURCE_URL}
-    password: ${AUTH_DATASOURCE_PASSWORD}
+    username: ${DATASOURCE_USERNAME}
+    url: ${DATASOURCE_URL}
+    password: ${DATASOURCE_PASSWORD}
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
