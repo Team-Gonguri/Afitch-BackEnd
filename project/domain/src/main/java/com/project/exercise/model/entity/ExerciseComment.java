@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -14,13 +15,19 @@ import javax.persistence.*;
 @Table(name = "exercise_comment")
 public class ExerciseComment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     private ExerciseUser exerciseUser;
 
     @ManyToOne
-    private User commenter;
+    private User user;
+
+    @Column(nullable = false)
+    private String text;
+
+    @Column
+    private Date createdAt;
 
 }

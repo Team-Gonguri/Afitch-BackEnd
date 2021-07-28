@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Exercise {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 20,nullable = false)
@@ -21,7 +21,7 @@ public class Exercise {
     @Column(nullable = false)
     private String url;
 
-    @Column
+    @Column()
     private int start;
 
     @Column

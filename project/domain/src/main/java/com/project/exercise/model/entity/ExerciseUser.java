@@ -1,32 +1,37 @@
 package com.project.exercise.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.auth.model.entity.User;
 import com.project.exercise.model.entity.enums.PublicScope;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "exercises_users")
+@Table(name = "exercise_users")
 public class ExerciseUser {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String url;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20,nullable = false)
+    @Column(length = 20, nullable = false)
     private PublicScope scope;
 
-    @Column
+    @Column(nullable = false)
     private int score;
 
     @ManyToOne
     private User user;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private Date createdAt;
 }

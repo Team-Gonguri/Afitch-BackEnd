@@ -25,7 +25,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .groupName("v1")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.editor"))
+                .apis(RequestHandlerSelectors.basePackage("com.project"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(Arrays.asList(securityContext()))
