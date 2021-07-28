@@ -34,7 +34,7 @@ public class ReadExcelService {
 
             String foodCategory = row.getCell(2).getStringCellValue();
 
-            double size = getNumericCell(row, 3);
+            int size = (int) getNumericCell(row, 3);
 
             String unit = row.getCell(4).getStringCellValue();
 

@@ -10,6 +10,7 @@ import com.project.auth.model.dto.SignUpDto;
 import com.project.auth.service.AuthService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/sign-up")
+    @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation("회원가입")
     public SignInResponse signUp(@RequestBody @Valid SignUpRequest req) {
         return new SignInResponse(authService.signUp(
@@ -32,6 +34,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-in")
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation("로그인")
     public SignInResponse signIn(@RequestBody @Valid SignInRequest req) {
         return new SignInResponse(authService.signIn(
@@ -43,6 +46,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation("AccessToken 갱신")
     public RefreshResponse refresh(@RequestBody @Valid RefreshRequest req) {
         return new RefreshResponse(
@@ -51,12 +55,14 @@ public class AuthController {
     }
 
     @GetMapping("/id-duplicate")
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Id 중복확인")
     public boolean checkIdDuplicate(@RequestParam String id) {
         return authService.isIdDuplicate(id);
     }
 
     @GetMapping("/nickname-duplicate")
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation("닉네임 중복확인")
     public boolean checkNickNameDuplicate(@RequestParam String nickName) { return authService.isNickNameDuplicate(nickName); }
 }

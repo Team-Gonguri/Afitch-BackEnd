@@ -10,11 +10,11 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "food",indexes = @Index(name = "i_name",columnList = "name"))
+@Table(name = "food",indexes = {@Index(name = "i_name",columnList = "name"),@Index(name = "i_categories",columnList = "foodCategory")})
 public class Food {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
