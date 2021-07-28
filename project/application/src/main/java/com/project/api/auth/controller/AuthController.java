@@ -1,12 +1,12 @@
 package com.project.api.auth.controller;
 
-import com.project.auth.model.dto.SignInDto;
-import com.project.auth.model.dto.SignUpDto;
 import com.project.api.auth.request.RefreshRequest;
 import com.project.api.auth.request.SignInRequest;
 import com.project.api.auth.request.SignUpRequest;
 import com.project.api.auth.response.RefreshResponse;
 import com.project.api.auth.response.SignInResponse;
+import com.project.auth.model.dto.SignInDto;
+import com.project.auth.model.dto.SignUpDto;
 import com.project.auth.service.AuthService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class AuthController {
         return new SignInResponse(authService.signUp(
                 new SignUpDto(req.getAccountId(),
                         req.getPassword(),
-                        req.getEmail())
+                        req.getNickName())
         ));
     }
 
@@ -55,4 +55,8 @@ public class AuthController {
     public boolean checkIdDuplicate(@RequestParam String id) {
         return authService.isIdDuplicate(id);
     }
+
+    @GetMapping("/nickname-duplicate")
+    @ApiOperation("닉네임 중복확인")
+    public boolean checkNickNameDuplicate(@RequestParam String nickName) { return authService.isNickNameDuplicate(nickName); }
 }

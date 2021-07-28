@@ -15,10 +15,10 @@ public class Exercise {
     @GeneratedValue
     private Long id;
 
-    @Column
+    @Column(length = 20,nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String url;
 
     @Column

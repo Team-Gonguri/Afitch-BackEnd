@@ -1,6 +1,7 @@
 package com.project.diet.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.auth.model.entity.User;
 import com.project.diet.model.entity.enums.MealType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +24,14 @@ public class Meal {
 
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
     private MealType type;
 
 
-    @OneToMany(mappedBy = "meal")
+    @ManyToOne
+    private User user;
+
+    @OneToMany(mappedBy = "meal", cascade = CascadeType.REMOVE)
     private List<FoodWrapper> foods;
 
 

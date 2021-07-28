@@ -21,6 +21,7 @@ public class ExerciseUser {
     private String url;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20,nullable = false)
     private PublicScope scope;
 
     @Column

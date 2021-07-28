@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
@@ -20,7 +19,6 @@ public class SignUpRequest {
     @ApiModelProperty("비밀번호")
     private String password;
 
-    @Email
-    @ApiModelProperty("이메일")
-    private String email;
+    @ApiModelProperty("닉네임")
+    private String nickName;
 }

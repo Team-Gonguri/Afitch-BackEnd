@@ -27,12 +27,12 @@ public class Food {
      * 1회 제공량
      */
     @Column
-    private double size;
+    private int size;
 
     /**
      * 1회 제공량 단위
      */
-    @Column
+    @Column(length = 1)
     private String unit;
 
     /**

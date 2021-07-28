@@ -8,5 +8,5 @@ import lombok.Getter;
 public class SignUpDto {
     private String accountId;
     private String password;
-    private String email;
+    private String nickName;
 }
