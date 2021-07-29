@@ -2,6 +2,7 @@ package com.project.diet.service;
 
 import com.monitorjbl.xlsx.StreamingReader;
 import com.project.diet.model.entity.Food;
+import com.project.diet.model.entity.Ingredient;
 import com.project.diet.model.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
@@ -50,20 +51,19 @@ public class ReadExcelService {
 
             double salt = getNumericCell(row, 10);
 
-
-            System.out.println(id + " " + name + " " + size + unit + " " + protein);
+            Ingredient ingredient = new Ingredient(protein,
+                    fat,
+                    carbohydrate,
+                    dietary_fiber,
+                    calcium,
+                    salt);
             foodRepository.save(new Food(
                     id,
                     name,
                     foodCategory,
                     size,
                     unit,
-                    protein,
-                    fat,
-                    carbohydrate,
-                    dietary_fiber,
-                    calcium,
-                    salt
+                    ingredient
             ));
         }
     }

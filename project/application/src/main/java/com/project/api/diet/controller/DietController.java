@@ -1,14 +1,16 @@
 package com.project.api.diet.controller;
 
+import com.project.api.diet.request.DietSaveRequest;
 import com.project.api.diet.response.FoodCategoryResponse;
+import com.project.api.diet.response.DietSaveResponse;
+import com.project.api.diet.response.FoodSearchResponse;
 import com.project.diet.service.DietService;
+import com.project.security.AuthInfo;
+import com.project.security.Authenticated;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -23,6 +25,25 @@ public class DietController {
     @ResponseStatus(HttpStatus.OK)
     public FoodCategoryResponse getFoodCategories() {
         return new FoodCategoryResponse(dietService.getFoodCategories());
+    }
+
+    @GetMapping("/search")
+    @ApiOperation("음식 검색하기")
+    @ResponseStatus(HttpStatus.OK)
+    public FoodSearchResponse findFood(
+            @RequestParam String keyword,
+            @RequestParam int page
+    ) {
+        return new FoodSearchResponse(dietService.findFoods(keyword, page));
+    }
+
+    @PostMapping
+    @ApiOperation("식단 저장하기")
+    @ResponseStatus(HttpStatus.CREATED)
+    public DietSaveResponse saveDiet(
+            @Authenticated AuthInfo authInfo,
+            @RequestBody DietSaveRequest req) {
+        return new DietSaveResponse(dietService.saveDiet(authInfo.getId(), req.getFoods(), req.getType()));
     }
 
 }
