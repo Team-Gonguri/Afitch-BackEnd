@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "food_wrapper")
 public class FoodWrapper {
 
@@ -29,4 +28,9 @@ public class FoodWrapper {
     @Column
     private int size;
 
+    public FoodWrapper(Food food, Meal meal, int size) {
+        this.food = food;
+        this.meal = meal;
+        this.size = size;
+    }
 }

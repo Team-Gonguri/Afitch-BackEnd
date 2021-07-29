@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,10 +32,8 @@ public class Meal {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "meal", cascade = CascadeType.REMOVE)
-    private List<FoodWrapper> foods;
-
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private Date createdAt;
+
 }
