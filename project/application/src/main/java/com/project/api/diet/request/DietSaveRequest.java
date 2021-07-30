@@ -12,4 +12,5 @@ import java.util.List;
 public class DietSaveRequest {
     private MealType type;
     private List<FoodWrapperDto> foods;
+    private String date;
 }

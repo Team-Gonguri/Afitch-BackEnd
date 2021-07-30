@@ -1,6 +1,7 @@
 package com.project.api.diet.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.DateUtils;
 import com.project.diet.model.dto.FoodWrapperDto;
 import com.project.diet.model.dto.MealDto;
 import com.project.diet.model.entity.Food;
@@ -16,17 +17,16 @@ import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
-public class DietSaveResponse {
+public class MealDetailResponse {
     private Long id;
     private MealType type;
     private List<FoodWrapperDto> foods;
 
     private Ingredient ingredients;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private Date createdAt;
+    private String createdAt;
 
-    public DietSaveResponse(MealDto mealDto) {
+    public MealDetailResponse(MealDto mealDto) {
         this.id = mealDto.getId();
         this.type = mealDto.getType();
         this.foods = mealDto.getFoods();
@@ -42,7 +42,7 @@ public class DietSaveResponse {
                     Ingredient it = wrappers.getFood().getIngredients();
                     ingredient.setCalcium(ingredient.getCalcium() + it.getCalcium() * wrappers.getSize());
                     ingredient.setCarbohydrate(ingredient.getCarbohydrate() + it.getCarbohydrate() * wrappers.getSize());
-                    ingredient.setDietary_fiber(ingredient.getCarbohydrate() + it.getDietary_fiber() * wrappers.getSize());
+                    ingredient.setDietary_fiber(ingredient.getDietary_fiber() + it.getDietary_fiber() * wrappers.getSize());
                     ingredient.setFat(ingredient.getFat() + it.getFat() * wrappers.getSize());
                     ingredient.setProtein(ingredient.getProtein() + it.getProtein() * wrappers.getSize());
                     ingredient.setSalt(ingredient.getSalt() + it.getSalt() * wrappers.getSize());
