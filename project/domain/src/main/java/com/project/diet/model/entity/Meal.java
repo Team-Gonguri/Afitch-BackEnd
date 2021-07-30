@@ -16,7 +16,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "meal")
+@Table(name = "meal", indexes = {
+        @Index(name = "i_type", columnList = "type"),
+        @Index(name = "i_createdAt", columnList = "createdAt")})
 public class Meal {
 
     @Id
