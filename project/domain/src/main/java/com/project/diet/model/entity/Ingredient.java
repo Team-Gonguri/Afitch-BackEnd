@@ -47,5 +47,9 @@ public class Ingredient {
     /**
      * 나트륨 (mg)
      */
+    @Column
     private double salt = 0;
+
+    @Column
+    private double calories = 0;
 }

@@ -58,13 +58,13 @@ public class DietService {
     public MealDto saveMeal(Long userId, List<FoodWrapperDto> dto, MealType type, String date) throws ParseException {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
         Meal meal = mealRepository.findByUserAndTypeAndCreatedAt(user, type, DateUtils.parseStringToDate(date));
+        Ingredient totalIngredients = calMealIngredients(dto);
         if (meal == null)
-            meal = mealRepository.save(new Meal(null, type, user, DateUtils.now(), null));
+            meal = mealRepository.save(new Meal(null, type, user, DateUtils.parseStringToDate(date), totalIngredients));
         else
             foodWrapperRepository.deleteAllByMeal(meal);
 
         saveFoodWrappers(meal, dto);
-        meal.setIngredient(calMealIngredients(dto));
         return new MealDto(meal, dto);
     }
 
@@ -89,6 +89,7 @@ public class DietService {
             ingredient.setFat(ingredient.getFat() + foodIngredient.getFat() * wrapper.getSize());
             ingredient.setProtein(ingredient.getProtein() + foodIngredient.getFat() * wrapper.getSize());
             ingredient.setSalt(ingredient.getSalt() + foodIngredient.getSalt() * wrapper.getSize());
+            ingredient.setCalories(ingredient.getCalories() + foodIngredient.getCalories() * wrapper.getSize());
         });
         return ingredient;
     }

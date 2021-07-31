@@ -16,14 +16,15 @@ import java.text.ParseException;
 
 
 @RestController
-@RequestMapping("/diet")
+@RequestMapping("/diets")
 @RequiredArgsConstructor
 public class DietController {
 
     private final DietService dietService;
 
-    @GetMapping
-    @ApiOperation("식단 가져오기")
+
+    @GetMapping("/diet")
+    @ApiOperation("특정 일자 식단 가져오기")
     @ResponseStatus(HttpStatus.OK)
     public DietSearchResponse getDiet(
             @Authenticated AuthInfo authInfo,

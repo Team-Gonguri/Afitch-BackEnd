@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @ApiModel("식사 저장 요청")
 public class MealSaveRequest {
-    @NotEmpty
+    @NotNull
     @ApiModelProperty("식사 타입 (BREAKFAST | LUNCH | DINNER)")
     private MealType type;
 

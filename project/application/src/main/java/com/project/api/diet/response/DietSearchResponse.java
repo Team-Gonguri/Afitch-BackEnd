@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @ApiModel("식단 검색 응답")
-public class DietSearchResponse {
+public class DietSearchResponse{
 
     @ApiModelProperty("식사 리스트 (아침,점심,저녁)")
     private List<SimpleMealDto> diet;
@@ -37,7 +37,7 @@ public class DietSearchResponse {
                     ingredient.setProtein(ingredient.getProtein() + mealIngredients.getProtein());
                     ingredient.setSalt(ingredient.getSalt() + mealIngredients.getSalt());
                     ingredient.setDietary_fiber(ingredient.getDietary_fiber() + mealIngredients.getDietary_fiber());
-
+                    ingredient.setCalories(ingredient.getCalories() + mealIngredients.getCalories());
                 }
         );
         return ingredient;
