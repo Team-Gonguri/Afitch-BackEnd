@@ -1,15 +1,15 @@
 package com.project.common.utils;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-public class PageUtils extends PageRequest {
+public class PageUtils {
 
-    private PageUtils(int page, int size) {
-        super(page, size, Sort.by("id").descending());
+    private static int size = 5;
+
+    public static Pageable normalPaging(int page, Sort.Direction direction) {
+        return PageRequest.of(page, size, direction, "id");
     }
 
-    public static PageUtils of(int page) {
-        return new PageUtils(page, 5);
-    }
 }

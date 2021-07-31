@@ -1,6 +1,6 @@
 package com.project.api.diet.controller;
 
-import com.project.api.diet.request.DietSaveRequest;
+import com.project.api.diet.request.MealSaveRequest;
 import com.project.api.diet.response.DietSearchResponse;
 import com.project.api.diet.response.MealDetailResponse;
 import com.project.diet.service.DietService;
@@ -11,18 +11,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 
 
 @RestController
-@RequestMapping("/diet")
+@RequestMapping("/diets")
 @RequiredArgsConstructor
 public class DietController {
 
     private final DietService dietService;
 
-    @GetMapping
-    @ApiOperation("식단 가져오기")
+
+    @GetMapping("/diet")
+    @ApiOperation("특정 일자 식단 가져오기")
     @ResponseStatus(HttpStatus.OK)
     public DietSearchResponse getDiet(
             @Authenticated AuthInfo authInfo,
@@ -46,7 +48,7 @@ public class DietController {
     @ResponseStatus(HttpStatus.CREATED)
     public MealDetailResponse saveDiet(
             @Authenticated AuthInfo authInfo,
-            @RequestBody DietSaveRequest req) throws ParseException {
+            @Valid @RequestBody MealSaveRequest req) throws ParseException {
         return new MealDetailResponse(dietService.saveMeal(authInfo.getId(), req.getFoods(), req.getType(), req.getDate()));
     }
 
