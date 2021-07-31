@@ -24,22 +24,6 @@ public class SimpleMealDto {
         this.type = meal.getType();
         this.foods = foodWrappers.stream().map(SimpleFoodWrapperDto::new).collect(Collectors.toList());
         this.createdAt = DateUtils.parseDateToString(meal.getCreatedAt());
-        this.ingredient = calculate(foodWrappers);
-    }
-
-    private Ingredient calculate(List<FoodWrapperDto> foodWrappers) {
-        Ingredient ingredient = new Ingredient();
-        foodWrappers.forEach(
-                wrappers -> {
-                    Ingredient it = wrappers.getFood().getIngredients();
-                    ingredient.setCalcium(ingredient.getCalcium() + it.getCalcium() * wrappers.getSize());
-                    ingredient.setCarbohydrate(ingredient.getCarbohydrate() + it.getCarbohydrate() * wrappers.getSize());
-                    ingredient.setDietary_fiber(ingredient.getCarbohydrate() + it.getDietary_fiber() * wrappers.getSize());
-                    ingredient.setFat(ingredient.getFat() + it.getFat() * wrappers.getSize());
-                    ingredient.setProtein(ingredient.getProtein() + it.getProtein() * wrappers.getSize());
-                    ingredient.setSalt(ingredient.getSalt() + it.getSalt() * wrappers.getSize());
-                }
-        );
-        return ingredient;
+        this.ingredient = meal.getIngredient();
     }
 }

@@ -6,6 +6,7 @@ import com.project.diet.model.entity.enums.MealType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,4 +39,7 @@ public class Meal {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private Date createdAt;
 
+    @Setter
+    @Embedded
+    Ingredient ingredient = null;
 }

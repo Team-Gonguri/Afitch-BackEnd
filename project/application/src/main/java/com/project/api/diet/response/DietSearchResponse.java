@@ -2,6 +2,8 @@ package com.project.api.diet.response;
 
 import com.project.diet.model.dto.SimpleMealDto;
 import com.project.diet.model.entity.Ingredient;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,8 +12,13 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@ApiModel("식단 검색 응답")
 public class DietSearchResponse {
+
+    @ApiModelProperty("식사 리스트 (아침,점심,저녁)")
     private List<SimpleMealDto> diet;
+
+    @ApiModelProperty("식단 총 영양분")
     private Ingredient ingredients;
 
     public DietSearchResponse(List<SimpleMealDto> diet) {
@@ -22,14 +29,15 @@ public class DietSearchResponse {
     private Ingredient calculate() {
         Ingredient ingredient = new Ingredient();
         diet.forEach(
-                dto -> {
-                    Ingredient it = dto.getIngredient();
-                    ingredient.setCalcium(ingredient.getCalcium() + it.getCalcium());
-                    ingredient.setCarbohydrate(ingredient.getCarbohydrate() + it.getCarbohydrate());
-                    ingredient.setDietary_fiber(ingredient.getDietary_fiber() + it.getDietary_fiber());
-                    ingredient.setFat(ingredient.getFat() + it.getFat());
-                    ingredient.setProtein(ingredient.getProtein() + it.getProtein());
-                    ingredient.setSalt(ingredient.getSalt() + it.getSalt());
+                meal -> {
+                    Ingredient mealIngredients = meal.getIngredient();
+                    ingredient.setCalcium(ingredient.getCalcium() + mealIngredients.getCalcium());
+                    ingredient.setCarbohydrate(ingredient.getCarbohydrate() + mealIngredients.getCarbohydrate());
+                    ingredient.setFat(ingredient.getFat() + mealIngredients.getFat());
+                    ingredient.setProtein(ingredient.getProtein() + mealIngredients.getProtein());
+                    ingredient.setSalt(ingredient.getSalt() + mealIngredients.getSalt());
+                    ingredient.setDietary_fiber(ingredient.getDietary_fiber() + mealIngredients.getDietary_fiber());
+
                 }
         );
         return ingredient;

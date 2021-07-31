@@ -9,6 +9,7 @@ import com.project.diet.model.dto.FoodWrapperDto;
 import com.project.diet.model.dto.MealDto;
 import com.project.diet.model.dto.SimpleMealDto;
 import com.project.diet.model.entity.FoodWrapper;
+import com.project.diet.model.entity.Ingredient;
 import com.project.diet.model.entity.Meal;
 import com.project.diet.model.entity.enums.MealType;
 import com.project.diet.model.repository.FoodWrapperRepository;
@@ -58,10 +59,12 @@ public class DietService {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
         Meal meal = mealRepository.findByUserAndTypeAndCreatedAt(user, type, DateUtils.parseStringToDate(date));
         if (meal == null)
-            meal = mealRepository.save(new Meal(null, type, user, DateUtils.now()));
+            meal = mealRepository.save(new Meal(null, type, user, DateUtils.now(), null));
         else
             foodWrapperRepository.deleteAllByMeal(meal);
+
         saveFoodWrappers(meal, dto);
+        meal.setIngredient(calMealIngredients(dto));
         return new MealDto(meal, dto);
     }
 
@@ -74,6 +77,20 @@ public class DietService {
                 )
         ).collect(Collectors.toList());
         foodWrapperRepository.saveAll(foods);
+    }
+
+    private Ingredient calMealIngredients(List<FoodWrapperDto> dto) {
+        Ingredient ingredient = new Ingredient();
+        dto.forEach(wrapper -> {
+            Ingredient foodIngredient = wrapper.getFood().getIngredients();
+            ingredient.setCalcium(ingredient.getCalcium() + foodIngredient.getCalcium() * wrapper.getSize());
+            ingredient.setCarbohydrate(ingredient.getCarbohydrate() + foodIngredient.getCarbohydrate() * wrapper.getSize());
+            ingredient.setDietary_fiber(ingredient.getDietary_fiber() + foodIngredient.getDietary_fiber() * wrapper.getSize());
+            ingredient.setFat(ingredient.getFat() + foodIngredient.getFat() * wrapper.getSize());
+            ingredient.setProtein(ingredient.getProtein() + foodIngredient.getFat() * wrapper.getSize());
+            ingredient.setSalt(ingredient.getSalt() + foodIngredient.getSalt() * wrapper.getSize());
+        });
+        return ingredient;
     }
 
 
