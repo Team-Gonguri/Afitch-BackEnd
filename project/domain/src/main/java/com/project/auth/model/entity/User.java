@@ -1,6 +1,8 @@
 package com.project.auth.model.entity;
 
 
+import com.project.auth.model.dto.UserInfoDto;
+import com.project.auth.model.repository.UserRepository;
 import com.project.security.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +13,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class User {
 
     @Id
@@ -27,7 +28,26 @@ public class User {
     @Column(length = 20)
     private String nickName;
 
+    @Column
+    private double height = 0;
+
+    @Column
+    private double weight = 0;
+
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    public User(String accountId, String password, String nickName, UserRole userRole) {
+        this.accountId = accountId;
+        this.password = password;
+        this.nickName = nickName;
+        this.userRole = userRole;
+    }
+
+    public void updateInfo(UserInfoDto dto) {
+        this.nickName = dto.getNickName();
+        this.height = dto.getHeight();
+        this.weight = dto.getWeight();
+    }
 
 }
