@@ -14,7 +14,6 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ingredient {
-
     /**
      * 단백질 (g)
      */
@@ -31,24 +30,6 @@ public class Ingredient {
      */
     @Column
     private double carbohydrate = 0;
-
-    /**
-     * 식이섬유 (g)
-     */
-    @Column
-    private double dietary_fiber = 0;
-
-    /**
-     * 칼슘 (mg)
-     */
-    @Column
-    private double calcium = 0;
-
-    /**
-     * 나트륨 (mg)
-     */
-    @Column
-    private double salt = 0;
 
     @Column
     private double calories = 0;
