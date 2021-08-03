@@ -1,20 +1,18 @@
-package com.project;
+package com.project.auth;
 
-import com.project.factory.AuthFactory;
 import com.project.auth.model.repository.UserRepository;
-import com.project.security.JwtProvider;
 import com.project.auth.service.AuthService;
+import com.project.common.TestBase;
+import com.project.common.factory.UserFactory;
+import com.project.security.JwtProvider;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
 
-@ExtendWith(MockitoExtension.class)
-public class AuthTestBase {
+public class AuthTestBase extends TestBase {
     @Mock
     protected PasswordEncoder passwordEncoder;
 
@@ -26,8 +24,6 @@ public class AuthTestBase {
 
     @InjectMocks
     protected AuthService authService;
-
-    protected AuthFactory authFactory = new AuthFactory();
 
     @BeforeEach
     public void setJwtProvider() {

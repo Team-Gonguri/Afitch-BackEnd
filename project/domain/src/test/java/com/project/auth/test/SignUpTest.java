@@ -1,6 +1,6 @@
-package com.project.auth;
+package com.project.auth.test;
 
-import com.project.AuthTestBase;
+import com.project.auth.AuthTestBase;
 import com.project.auth.model.dto.SignUpDto;
 import com.project.auth.model.dto.TokenDto;
 import org.junit.jupiter.api.Assertions;
@@ -15,7 +15,7 @@ public class SignUpTest extends AuthTestBase {
     public void singUpSuccess() {
 
         Mockito.when(userRepository.save(Mockito.any()))
-                .thenReturn(authFactory.sampleUser);
+                .thenReturn(userFactory.sampleUser);
 
         SignUpDto signUpDto = new SignUpDto("ktj7916", "1q2w3e4r!!", "ktj7916@naver.com");
         TokenDto tokenDto = Assertions.assertDoesNotThrow(() -> authService.signUp(signUpDto));

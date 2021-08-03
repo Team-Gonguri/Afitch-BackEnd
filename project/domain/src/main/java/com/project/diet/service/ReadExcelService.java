@@ -45,20 +45,11 @@ public class ReadExcelService {
 
             double carbohydrate = getNumericCell(row, 7);
 
-            double dietary_fiber = getNumericCell(row, 8);
-
-            double calcium = getNumericCell(row, 9);
-
-            double salt = getNumericCell(row, 10);
-
-            double calories = getNumericCell(row, 11);
+            double calories = getNumericCell(row, 8);
 
             Ingredient ingredient = new Ingredient(protein,
                     fat,
                     carbohydrate,
-                    dietary_fiber,
-                    calcium,
-                    salt,
                     calories);
             foodRepository.save(new Food(
                     id,

@@ -1,6 +1,6 @@
-package com.project.auth;
+package com.project.auth.test;
 
-import com.project.AuthTestBase;
+import com.project.auth.AuthTestBase;
 import com.project.auth.exceptions.InvalidRefreshTokenException;
 import com.project.security.enums.UserRole;
 import org.junit.jupiter.api.Assertions;

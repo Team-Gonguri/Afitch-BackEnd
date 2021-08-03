@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id

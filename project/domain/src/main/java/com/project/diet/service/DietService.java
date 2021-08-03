@@ -83,12 +83,9 @@ public class DietService {
         Ingredient ingredient = new Ingredient();
         dto.forEach(wrapper -> {
             Ingredient foodIngredient = wrapper.getFood().getIngredients();
-            ingredient.setCalcium(ingredient.getCalcium() + foodIngredient.getCalcium() * wrapper.getSize());
             ingredient.setCarbohydrate(ingredient.getCarbohydrate() + foodIngredient.getCarbohydrate() * wrapper.getSize());
-            ingredient.setDietary_fiber(ingredient.getDietary_fiber() + foodIngredient.getDietary_fiber() * wrapper.getSize());
             ingredient.setFat(ingredient.getFat() + foodIngredient.getFat() * wrapper.getSize());
             ingredient.setProtein(ingredient.getProtein() + foodIngredient.getFat() * wrapper.getSize());
-            ingredient.setSalt(ingredient.getSalt() + foodIngredient.getSalt() * wrapper.getSize());
             ingredient.setCalories(ingredient.getCalories() + foodIngredient.getCalories() * wrapper.getSize());
         });
         return ingredient;

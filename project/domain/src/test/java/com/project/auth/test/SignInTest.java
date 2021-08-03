@@ -1,6 +1,6 @@
-package com.project.auth;
+package com.project.auth.test;
 
-import com.project.AuthTestBase;
+import com.project.auth.AuthTestBase;
 import com.project.auth.exceptions.WrongAccountInfoException;
 import com.project.auth.model.dto.SignInDto;
 import com.project.auth.model.dto.TokenDto;
@@ -17,7 +17,7 @@ public class SignInTest extends AuthTestBase {
     @DisplayName("로그인 성공")
     public void signInSuccess() {
         Mockito.when(userRepository.findByAccountId(Mockito.anyString()))
-                .thenReturn(authFactory.sampleOptionalAccount);
+                .thenReturn(userFactory.sampleOptionalUser);
 
         Mockito.when(passwordEncoder.matches(Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(true);
@@ -43,7 +43,7 @@ public class SignInTest extends AuthTestBase {
     @DisplayName("로그인 실패(잘못된 패스워드)")
     public void testFailedBecauseOfWrongPassword(){
         Mockito.when(userRepository.findByAccountId(Mockito.anyString()))
-                .thenReturn(authFactory.sampleOptionalAccount);
+                .thenReturn(userFactory.sampleOptionalUser);
         Mockito.when(passwordEncoder.matches(Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(false);
 
