@@ -14,9 +14,9 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "meal", indexes = {
-        @Index(name = "i_type", columnList = "type"),
-        @Index(name = "i_createdAt", columnList = "createdAt")})
+@Table(name = "meal", indexes =
+@Index(name = "i_type", columnList = "createdAt,type")
+)
 public class Meal {
 
     @Id
