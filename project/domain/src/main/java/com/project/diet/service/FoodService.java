@@ -2,7 +2,6 @@ package com.project.diet.service;
 
 import com.project.common.dto.PageDto;
 import com.project.common.utils.PageUtils;
-import com.project.diet.model.entity.Food;
 import com.project.diet.model.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,7 +25,7 @@ public class FoodService {
     }
 
     @Transactional(readOnly = true)
-    public PageDto<Food> findFoods(String keyword, int page) {
+    public PageDto findFoods(String keyword, int page) {
         return new PageDto(foodRepository.findFoodByNameContaining(keyword, PageUtils.normalPaging(page, Sort.Direction.DESC)));
     }
 

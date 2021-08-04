@@ -1,7 +1,8 @@
-package com.project.auth;
+package com.project.auth.test;
 
 
-import com.project.common.AuthTestBase;
+import com.project.auth.AuthTestBase;
+import com.project.common.CommonTestBase;
 import com.project.security.enums.TokenType;
 import com.project.security.enums.UserRole;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,25 +13,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 public class RefreshTokenTest extends AuthTestBase {
-
-
-    protected String validAccessToken = null;
-    protected String inValidAccessToken = null;
-    protected String validRefreshToken = null;
-    protected String inValidRefreshToken = null;
-    protected String expiredAccessToken = null;
-    protected String expiredRefreshToken = null;
-
-    @BeforeEach
-    public void setUp() {
-        validAccessToken = jwtProvider.getToken(1L, UserRole.ROLE_USER, TokenType.ACCESS);
-        validRefreshToken = jwtProvider.getToken(1L, UserRole.ROLE_ADMIN, TokenType.REFRESH);
-
-        expiredAccessToken = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTYyNTcyNDk2OSwiZXhwIjoxNjI1NzI0OTcwfQ.Fv-fptrtlYmVPl7bm6m-3w1MW8cT84d9RrS_UcPM2aA";
-        expiredRefreshToken = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTYyNTcyNTEwNCwiZXhwIjoxNjI1NzI1MTA2fQ.IXoYXZlFK6SvxfqeVBUQfCu3IJdafAbKBi9_7RpsH94";
-        inValidAccessToken = "InvalidAccess";
-        inValidRefreshToken = "InvalidRefresh";
-    }
 
     @Test
     @DisplayName("토큰 갱신 성공")

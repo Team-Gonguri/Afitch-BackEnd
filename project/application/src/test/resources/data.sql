@@ -1,0 +1,1 @@
+INSERT INTO USERS(id,account_id,password,nick_name,height,weight,user_role) VALUES(9999,'testUser','encodedPassword','꼬마거인',170.0,57.0,'ROLE_USER');

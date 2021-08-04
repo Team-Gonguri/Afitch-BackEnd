@@ -1,7 +1,8 @@
-package com.project.auth;
+package com.project.auth.test;
 
 import com.project.api.auth.request.SignUpRequest;
-import com.project.common.AuthTestBase;
+import com.project.auth.AuthTestBase;
+import com.project.common.CommonTestBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
