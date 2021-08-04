@@ -19,8 +19,8 @@ public class GetMyInfoTest extends UserTestBase {
                 .when(userRepository).findById(Mockito.anyLong());
 
         UserInfoDto userInfoDto = Assertions.assertDoesNotThrow(() -> userService.getMyInfo(1L));
-        Assertions.assertEquals(userInfoDto.getHeight(), 0);
-        Assertions.assertEquals(userInfoDto.getWeight(), 0);
+        Assertions.assertEquals(userInfoDto.getHeight(), 170.0);
+        Assertions.assertEquals(userInfoDto.getWeight(), 57.0);
         Assertions.assertEquals(userInfoDto.getNickName(), userFactory.sampleUser.getNickName());
     }
 
