@@ -14,10 +14,18 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 application:
   jwt:
     secret: ${JWT_SECRET}
     validtime:
       access: 86400000
       refresh: 604800000
+cloud:
+  aws:
+    credentials:
+      accessKey: ${CLOUD_AWS_ACCESSKEY}
+      secretKey: ${CLOUD_AWS_SECRETKEY}
+    bucket: ${CLOUD_AWS_BUCKET}
+    region:
+      static: ${CLOUD_AWS_REGION}
