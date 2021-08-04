@@ -1,4 +1,4 @@
-name: Auth Build Test
+name: Build Test
 
 on:
   pull_request:
@@ -16,6 +16,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
     steps:
       - name: Access to github repo

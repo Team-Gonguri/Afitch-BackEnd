@@ -1,5 +1,6 @@
 package com.project.configs;
 
+import com.project.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,11 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final JwtFilter jwtFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -28,6 +32,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .anyRequest().hasAnyRole("USER");
+                .antMatchers(
+                        "/",
+                        "/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**")
+                .permitAll()
+                .anyRequest().hasAnyRole("USER")
+                .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

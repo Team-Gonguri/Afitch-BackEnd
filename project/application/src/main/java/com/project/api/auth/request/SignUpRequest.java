@@ -19,6 +19,7 @@ public class SignUpRequest {
     @ApiModelProperty("비밀번호")
     private String password;
 
+    @NotEmpty
     @ApiModelProperty("닉네임")
     private String nickName;
 }

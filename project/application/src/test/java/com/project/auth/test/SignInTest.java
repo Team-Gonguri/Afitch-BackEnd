@@ -1,8 +1,10 @@
-package com.project.auth;
+package com.project.auth.test;
 
 import com.project.api.auth.request.SignInRequest;
 import com.project.api.auth.request.SignUpRequest;
-import com.project.common.AuthTestBase;
+import com.project.auth.AuthTestBase;
+import com.project.auth.model.dto.SignUpDto;
+import com.project.common.CommonTestBase;
 import com.project.auth.model.entity.User;
 import com.project.security.enums.UserRole;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,13 +23,10 @@ public class SignInTest extends AuthTestBase {
     @BeforeEach
     public void setUp() {
         SignUpRequest signUpRequest = new SignUpRequest("ktj7916", "1q2w3e4r!!", "ktj7916@naver.com");
-        userRepository.save(
-                new User(
-                        null,
-                        signUpRequest.getAccountId(),
-                        passwordEncoder.encode(signUpRequest.getPassword()),
-                        signUpRequest.getEmail(),
-                        UserRole.ROLE_USER));
+        authService.signUp(
+                new SignUpDto(signUpRequest.getAccountId(),
+                        signUpRequest.getPassword(),
+                        signUpRequest.getNickName()));
     }
 
 

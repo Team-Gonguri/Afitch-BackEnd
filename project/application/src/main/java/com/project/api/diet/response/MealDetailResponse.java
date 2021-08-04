@@ -46,12 +46,9 @@ public class MealDetailResponse {
         foodWrappers.forEach(
                 wrappers -> {
                     Ingredient it = wrappers.getFood().getIngredients();
-                    ingredient.setCalcium(ingredient.getCalcium() + it.getCalcium() * wrappers.getSize());
                     ingredient.setCarbohydrate(ingredient.getCarbohydrate() + it.getCarbohydrate() * wrappers.getSize());
-                    ingredient.setDietary_fiber(ingredient.getDietary_fiber() + it.getDietary_fiber() * wrappers.getSize());
                     ingredient.setFat(ingredient.getFat() + it.getFat() * wrappers.getSize());
                     ingredient.setProtein(ingredient.getProtein() + it.getProtein() * wrappers.getSize());
-                    ingredient.setSalt(ingredient.getSalt() + it.getSalt() * wrappers.getSize());
                 }
         );
         return ingredient;

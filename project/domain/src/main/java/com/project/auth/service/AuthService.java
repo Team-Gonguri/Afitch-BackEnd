@@ -43,13 +43,14 @@ public class AuthService {
         return !userRepository.existsByAccountId(accountId);
     }
 
-    public boolean isNickNameDuplicate(String nickName) { return !userRepository.existsByNickName(nickName); }
+    public boolean isNickNameDuplicate(String nickName) {
+        return !userRepository.existsByNickName(nickName);
+    }
 
     public TokenDto signUp(SignUpDto signUpDto) {
         User user =
                 userRepository.save(
                         new User(
-                                null,
                                 signUpDto.getAccountId(),
                                 passwordEncoder.encode(signUpDto.getPassword()),
                                 signUpDto.getNickName(),

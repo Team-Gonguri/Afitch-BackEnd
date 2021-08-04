@@ -1,7 +1,8 @@
-package com.project.auth;
+package com.project.auth.test;
 
 import com.project.api.auth.request.SignUpRequest;
-import com.project.common.AuthTestBase;
+import com.project.auth.AuthTestBase;
+import com.project.common.CommonTestBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -17,7 +18,7 @@ public class SignUpTest extends AuthTestBase {
         mockMvc.perform(MockMvcRequestBuilders.post("/auth/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(signUpRequest)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("accessToken").isString())
                 .andExpect(MockMvcResultMatchers.jsonPath("refreshToken").isString());
     }
@@ -25,7 +26,7 @@ public class SignUpTest extends AuthTestBase {
     @Test
     @DisplayName("회원가입 실패(누락된 정보)")
     public void signUpFailedBecauseOfEmptyValue() throws Exception {
-        SignUpRequest signUpRequest = new SignUpRequest("ktj7916", "1q2w3e4r!!", "ktj7916");
+        SignUpRequest signUpRequest = new SignUpRequest("ktj7916", "1q2w3e4r!!", null);
         mockMvc.perform(MockMvcRequestBuilders.post("/auth/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(signUpRequest)))

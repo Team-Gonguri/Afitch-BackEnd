@@ -31,12 +31,9 @@ public class DietSearchResponse{
         diet.forEach(
                 meal -> {
                     Ingredient mealIngredients = meal.getIngredient();
-                    ingredient.setCalcium(ingredient.getCalcium() + mealIngredients.getCalcium());
                     ingredient.setCarbohydrate(ingredient.getCarbohydrate() + mealIngredients.getCarbohydrate());
                     ingredient.setFat(ingredient.getFat() + mealIngredients.getFat());
                     ingredient.setProtein(ingredient.getProtein() + mealIngredients.getProtein());
-                    ingredient.setSalt(ingredient.getSalt() + mealIngredients.getSalt());
-                    ingredient.setDietary_fiber(ingredient.getDietary_fiber() + mealIngredients.getDietary_fiber());
                     ingredient.setCalories(ingredient.getCalories() + mealIngredients.getCalories());
                 }
         );
