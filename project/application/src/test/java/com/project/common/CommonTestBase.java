@@ -1,8 +1,5 @@
 package com.project.common;
 
-import com.project.api.auth.request.SignUpRequest;
-import com.project.auth.model.dto.SignUpDto;
-import com.project.auth.model.entity.User;
 import com.project.auth.model.repository.UserRepository;
 import com.project.auth.service.AuthService;
 import com.project.security.JwtProvider;
@@ -39,7 +36,8 @@ public class CommonTestBase {
     @Autowired
     protected AuthService authService;
 
-    protected String validAccessToken = null;
+    protected String validAccessToken1 = null;
+    protected String validAccessToken2 = null;
     protected String notExistAccessToken = null;
     protected String inValidAccessToken = null;
     protected String validRefreshToken = null;
@@ -50,7 +48,8 @@ public class CommonTestBase {
     @Order(2)
     @BeforeEach
     public void createToken() {
-        validAccessToken = jwtProvider.getToken(9999L, UserRole.ROLE_USER, TokenType.ACCESS);
+        validAccessToken1 = jwtProvider.getToken(9999L, UserRole.ROLE_USER, TokenType.ACCESS);
+        validAccessToken2 = jwtProvider.getToken(9998L, UserRole.ROLE_USER, TokenType.ACCESS);
         validRefreshToken = jwtProvider.getToken(9999L, UserRole.ROLE_USER, TokenType.REFRESH);
         notExistAccessToken = jwtProvider.getToken(100000L, UserRole.ROLE_USER, TokenType.ACCESS);
 

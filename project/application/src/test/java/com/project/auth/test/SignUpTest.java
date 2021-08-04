@@ -18,7 +18,7 @@ public class SignUpTest extends AuthTestBase {
         mockMvc.perform(MockMvcRequestBuilders.post("/auth/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(signUpRequest)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("accessToken").isString())
                 .andExpect(MockMvcResultMatchers.jsonPath("refreshToken").isString());
     }
@@ -26,7 +26,7 @@ public class SignUpTest extends AuthTestBase {
     @Test
     @DisplayName("회원가입 실패(누락된 정보)")
     public void signUpFailedBecauseOfEmptyValue() throws Exception {
-        SignUpRequest signUpRequest = new SignUpRequest("ktj7916", "1q2w3e4r!!", "ktj7916");
+        SignUpRequest signUpRequest = new SignUpRequest("ktj7916", "1q2w3e4r!!", null);
         mockMvc.perform(MockMvcRequestBuilders.post("/auth/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(signUpRequest)))

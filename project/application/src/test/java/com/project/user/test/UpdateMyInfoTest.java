@@ -17,7 +17,7 @@ public class UpdateMyInfoTest extends UserTestBase {
         mockMvc.perform(MockMvcRequestBuilders.put("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(req))
-                .header("Authorization", "Bearer " + validAccessToken))
+                .header("Authorization", "Bearer " + validAccessToken1))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("nickName").value(req.getNickName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("weight").value(req.getWeight()))
@@ -31,7 +31,7 @@ public class UpdateMyInfoTest extends UserTestBase {
         mockMvc.perform(MockMvcRequestBuilders.put("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(req))
-                .header("Authorization", "Bearer " + validAccessToken))
+                .header("Authorization", "Bearer " + validAccessToken1))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("errorCode").value("USER-002"));
     }

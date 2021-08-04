@@ -12,11 +12,11 @@ public class GetMyInfoTest extends UserTestBase {
     @DisplayName("내 정보 가져오기 성공")
     public void getMyInfoSuccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user")
-                .header("Authorization", "Bearer " + validAccessToken))
+                .header("Authorization", "Bearer " + validAccessToken1))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("nickName").value("ktj7916"))
-                .andExpect(MockMvcResultMatchers.jsonPath("weight").value(0))
-                .andExpect(MockMvcResultMatchers.jsonPath("height").value(0));
+                .andExpect(MockMvcResultMatchers.jsonPath("nickName").value("test1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("weight").value(57.0))
+                .andExpect(MockMvcResultMatchers.jsonPath("height").value(170.0));
     }
 
     @Test
