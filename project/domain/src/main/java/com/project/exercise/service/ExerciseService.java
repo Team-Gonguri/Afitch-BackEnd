@@ -1,6 +1,7 @@
 package com.project.exercise.service;
 
-import com.project.DateUtils;
+import com.project.utils.ConnectorUtils;
+import com.project.utils.DateUtils;
 import com.project.auth.exceptions.UserNotExistsException;
 import com.project.auth.model.entity.User;
 import com.project.auth.model.repository.UserRepository;
@@ -14,10 +15,18 @@ import com.project.exercise.model.entity.enums.PublicScope;
 import com.project.exercise.model.repository.ExerciseRepository;
 import com.project.exercise.model.repository.ExerciseUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 @Service
@@ -28,6 +37,10 @@ public class ExerciseService {
     private final ExerciseUserRepository exerciseUserRepository;
     private final UserRepository userRepository;
     private final S3Manager s3Manager;
+    private final ConnectorUtils connectorUtils;
+
+    @Value("${application.vision.server}")
+    private String visionServerURL;
 
     @Transactional(readOnly = true)
     public ExpertExerciseDto getExpertExerciseVideo(Long exerciseId) {
@@ -41,11 +54,11 @@ public class ExerciseService {
     }
 
     @Transactional
-    public UserExerciseDto saveUserExerciseVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws ParseException {
+    public UserExerciseDto saveUserExerciseVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws ParseException, IOException {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
-        String url = s3Manager.uploadFile(video);
-        ExerciseUser exerciseUser = exerciseUserRepository.save(
+        String url = s3Manager.uploadFile(video, user.getNickName(), exercise.getName());
+        ExerciseUser exerciseUser = exerciseUserRepository.findByExerciseAndUserAndCreatedAt(exercise, user, DateUtils.now()).orElse(exerciseUserRepository.save(
                 new ExerciseUser(
                         null,
                         url,
@@ -54,8 +67,19 @@ public class ExerciseService {
                         exercise,
                         user,
                         DateUtils.now()
-                )
+                ))
         );
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA.toString());
+        connectorUtils.send(HttpMethod.POST, visionServerURL, headers, url, String.class, Integer.class)
+                .subscribe(result -> {
+                    if (result > exerciseUser.getScore()) {
+                        s3Manager.deleteFile(exerciseUser.getUrl());
+                        exerciseUser.updateScore(result);
+                        exerciseUser.updateUrl(url);
+                    } else
+                        s3Manager.deleteFile(url);
+                });
 
         return new UserExerciseDto(exerciseUser);
     }

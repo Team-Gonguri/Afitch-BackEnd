@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 @RestController
@@ -38,7 +39,7 @@ public class ExerciseController {
             @RequestPart MultipartFile video,
             @PathVariable Long exerciseId,
             @RequestParam String open
-    ) throws ParseException {
+    ) throws ParseException, IOException {
         return new SaveExerciseResponse(
                 exerciseService.saveUserExerciseVideo(authInfo.getId(), exerciseId, video, open)
         );

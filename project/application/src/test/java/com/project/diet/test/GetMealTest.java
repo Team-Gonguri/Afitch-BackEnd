@@ -1,6 +1,6 @@
 package com.project.diet.test;
 
-import com.project.DateUtils;
+import com.project.utils.DateUtils;
 import com.project.diet.DietTestBase;
 import com.project.diet.model.dto.MealDto;
 import com.project.diet.model.entity.enums.MealType;

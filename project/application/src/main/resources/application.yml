@@ -21,6 +21,8 @@ application:
     validtime:
       access: 86400000
       refresh: 604800000
+  vision:
+    server: ${VISION_SERVER_URL}
 cloud:
   aws:
     credentials:

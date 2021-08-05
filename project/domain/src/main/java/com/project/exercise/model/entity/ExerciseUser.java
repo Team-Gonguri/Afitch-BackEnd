@@ -42,4 +42,8 @@ public class ExerciseUser {
     public void updateScore(int score) {
         this.score = score;
     }
+
+    public void updateUrl(String url) {
+        this.url = url;
+    }
 }

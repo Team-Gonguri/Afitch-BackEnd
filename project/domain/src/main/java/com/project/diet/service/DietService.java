@@ -1,6 +1,6 @@
 package com.project.diet.service;
 
-import com.project.DateUtils;
+import com.project.utils.DateUtils;
 import com.project.auth.exceptions.UserNotExistsException;
 import com.project.auth.model.entity.User;
 import com.project.auth.model.repository.UserRepository;

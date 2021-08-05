@@ -1,6 +1,6 @@
 package com.project.exercise.model.entity.dto;
 
-import com.project.DateUtils;
+import com.project.utils.DateUtils;
 import com.project.exercise.model.entity.ExerciseUser;
 import com.project.exercise.model.entity.enums.ExerciseType;
 import lombok.AllArgsConstructor;
