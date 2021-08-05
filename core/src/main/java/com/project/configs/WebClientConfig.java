@@ -4,26 +4,26 @@ import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
 import java.util.concurrent.TimeUnit;
 
-@Component
-public class WebClientBuilder {
+@Configuration
+public class WebClientConfig {
 
     @Bean
-    public WebClient.Builder webClientBuilder() {
+    public WebClient webClient() {
         ReactorClientHttpConnector clientHttpConnector = new ReactorClientHttpConnector(
                 HttpClient.create()
                         .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 40000) // ConnectionTimeOut 40초
                         .doOnConnected(
                                 connection -> {
-                                    connection.addHandlerLast(new ReadTimeoutHandler(3000, TimeUnit.MILLISECONDS));
-                                    connection.addHandlerLast(new WriteTimeoutHandler(3000, TimeUnit.MILLISECONDS));
+                                    connection.addHandlerLast(new ReadTimeoutHandler(40000, TimeUnit.MILLISECONDS));
+                                    connection.addHandlerLast(new WriteTimeoutHandler(40000, TimeUnit.MILLISECONDS));
                                 }
                         )
         );
@@ -32,6 +32,6 @@ public class WebClientBuilder {
                 .build();
         return WebClient.builder()
                 .clientConnector(clientHttpConnector)
-                .exchangeStrategies(exchangeStrategies);
+                .exchangeStrategies(exchangeStrategies).build();
     }
 }

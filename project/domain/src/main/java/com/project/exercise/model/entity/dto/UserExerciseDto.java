@@ -11,7 +11,6 @@ import lombok.Getter;
 public class UserExerciseDto {
     private Long id;
     private String exerciseName;
-    private ExerciseType type;
     private String userURL;
     private String expertURL;
     private String createdAt;
@@ -21,6 +20,14 @@ public class UserExerciseDto {
         this.exerciseName = exerciseUser.getExercise().getName();
         this.expertURL = exerciseUser.getExercise().getUrl();
         this.userURL = exerciseUser.getUrl();
+        this.createdAt = DateUtils.parseDateToString(exerciseUser.getCreatedAt());
+    }
+
+    public UserExerciseDto(ExerciseUser exerciseUser, String url) {
+        this.id = exerciseUser.getId();
+        this.exerciseName = exerciseUser.getExercise().getName();
+        this.expertURL = exerciseUser.getExercise().getUrl();
+        this.userURL = url;
         this.createdAt = DateUtils.parseDateToString(exerciseUser.getCreatedAt());
     }
 }

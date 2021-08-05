@@ -53,7 +53,7 @@ public class ExerciseService {
         );
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     public UserExerciseDto saveUserExerciseVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws ParseException, IOException {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
@@ -69,19 +69,19 @@ public class ExerciseService {
                         DateUtils.now()
                 ))
         );
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA.toString());
-        connectorUtils.send(HttpMethod.POST, visionServerURL, headers, url, String.class, Integer.class)
+        connectorUtils.send(HttpMethod.POST, visionServerURL, url, String.class, Integer.class)
                 .subscribe(result -> {
+                    System.out.println(result);
                     if (result > exerciseUser.getScore()) {
-                        s3Manager.deleteFile(exerciseUser.getUrl());
                         exerciseUser.updateScore(result);
                         exerciseUser.updateUrl(url);
+                        s3Manager.deleteFile(exerciseUser.getUrl());
+                        exerciseUserRepository.save(exerciseUser);
                     } else
                         s3Manager.deleteFile(url);
                 });
 
-        return new UserExerciseDto(exerciseUser);
+        return new UserExerciseDto(exerciseUser, url);
     }
 
 

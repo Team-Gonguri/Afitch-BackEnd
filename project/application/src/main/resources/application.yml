@@ -1,6 +1,10 @@
 server:
   port: ${SERVER_PORT}
 spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DATASOURCE_USERNAME}
@@ -14,7 +18,7 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 application:
   jwt:
     secret: ${JWT_SECRET}
