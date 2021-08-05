@@ -1,14 +1,17 @@
 package com.project.exercise.model.entity;
 
+import com.project.exercise.model.entity.enums.ExerciseType;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "exercise")
+@Table(name = "exercise",indexes = @Index(name = "e_type",columnList = "type"))
 public class Exercise {
 
     @Id
@@ -21,11 +24,9 @@ public class Exercise {
     @Column(nullable = false)
     private String url;
 
-    @Column()
-    private int start;
-
     @Column
-    private int end;
+    @Enumerated(EnumType.STRING)
+    private ExerciseType type;
 
 
 }

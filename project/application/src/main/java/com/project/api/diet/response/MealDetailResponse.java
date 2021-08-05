@@ -1,11 +1,7 @@
 package com.project.api.diet.response;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.DateUtils;
 import com.project.diet.model.dto.FoodWrapperDto;
 import com.project.diet.model.dto.MealDto;
-import com.project.diet.model.entity.Food;
-import com.project.diet.model.entity.FoodWrapper;
 import com.project.diet.model.entity.Ingredient;
 import com.project.diet.model.entity.enums.MealType;
 import io.swagger.annotations.ApiModel;
@@ -13,9 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor

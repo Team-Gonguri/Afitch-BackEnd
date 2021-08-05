@@ -1,6 +1,10 @@
 server:
   port: ${SERVER_PORT}
 spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DATASOURCE_USERNAME}
@@ -21,3 +25,13 @@ application:
     validtime:
       access: 86400000
       refresh: 604800000
+  vision:
+    server: ${VISION_SERVER_URL}
+cloud:
+  aws:
+    credentials:
+      accessKey: ${CLOUD_AWS_ACCESSKEY}
+      secretKey: ${CLOUD_AWS_SECRETKEY}
+    bucket: ${CLOUD_AWS_BUCKET}
+    region:
+      static: ${CLOUD_AWS_REGION}

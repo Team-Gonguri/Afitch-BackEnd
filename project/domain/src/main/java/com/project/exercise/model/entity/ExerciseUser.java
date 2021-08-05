@@ -3,12 +3,16 @@ package com.project.exercise.model.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.auth.model.entity.User;
 import com.project.exercise.model.entity.enums.PublicScope;
+import com.project.utils.DateUtils;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.text.ParseException;
 import java.util.Date;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,11 +31,29 @@ public class ExerciseUser {
     private PublicScope scope;
 
     @Column(nullable = false)
-    private int score;
+    private int score = -1;
 
     @ManyToOne
+    private Exercise exercise;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private Date createdAt;
+
+    public void updateScore(int score) {
+        this.score = score;
+    }
+
+    public void updateUrl(String url) {
+        this.url = url;
+    }
+
+    public ExerciseUser(String url, PublicScope scope, Exercise exercise, User user) {
+        this.url = url;
+        this.scope = scope;
+        this.exercise = exercise;
+        this.user = user;
+        this.createdAt = DateUtils.now();
+    }
 }

@@ -1,16 +1,12 @@
 package com.project.diet;
 
-import com.project.DateUtils;
+import com.project.utils.DateUtils;
 import com.project.common.CommonTestBase;
 import com.project.diet.model.dto.FoodWrapperDto;
 import com.project.diet.model.dto.MealDto;
-import com.project.diet.model.dto.SimpleFoodWrapperDto;
 import com.project.diet.model.entity.Food;
-import com.project.diet.model.entity.FoodWrapper;
 import com.project.diet.model.entity.Ingredient;
-import com.project.diet.model.entity.Meal;
 import com.project.diet.model.entity.enums.MealType;
-import com.project.diet.model.repository.MealRepository;
 import com.project.diet.service.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,6 +1,6 @@
 package com.project.diet.test;
 
-import com.project.DateUtils;
+import com.project.utils.DateUtils;
 import com.project.auth.exceptions.UserNotExistsException;
 import com.project.diet.DietTestBase;
 import com.project.diet.model.dto.SimpleMealDto;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

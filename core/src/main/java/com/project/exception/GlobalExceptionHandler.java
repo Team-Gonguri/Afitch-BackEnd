@@ -19,4 +19,10 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleMethodArgumentNotValidException(Exception e) {
         return new ErrorResponse(GlobalExceptionType.INVALID_ARGUMENT.getMessage(), GlobalExceptionType.INVALID_ARGUMENT.getCode());
     }
+
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    @ExceptionHandler(UnExpectedError.class)
+    public ErrorResponse handleConnectionError(Exception e) {
+        return new ErrorResponse(GlobalExceptionType.UNEXPECTED_SERVER_ERROR.getMessage(), GlobalExceptionType.UNEXPECTED_SERVER_ERROR.getCode());
+    }
 }

@@ -1,6 +1,6 @@
 package com.project.diet.model.dto;
 
-import com.project.DateUtils;
+import com.project.utils.DateUtils;
 import com.project.diet.model.entity.Ingredient;
 import com.project.diet.model.entity.Meal;
 import com.project.diet.model.entity.enums.MealType;
