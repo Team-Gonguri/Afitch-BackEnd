@@ -1,5 +1,7 @@
 package com.project.utils;
 
+import com.project.exception.UnExpectedError;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +17,11 @@ public class DateUtils {
         return dateFormat.parse(string);
     }
 
-    public static Date now() throws ParseException {
-        return parseStringToDate(parseDateToString(new Date()));
+    public static Date now() {
+        try {
+            return parseStringToDate(parseDateToString(new Date()));
+        } catch (ParseException e) {
+            throw new UnExpectedError("Unexpected Date Parsing Error");
+        }
     }
 }

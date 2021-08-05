@@ -1,4 +1,4 @@
-package com.project.exercise.model.entity.dto;
+package com.project.exercise.model.dto;
 
 import com.project.utils.DateUtils;
 import com.project.exercise.model.entity.ExerciseUser;

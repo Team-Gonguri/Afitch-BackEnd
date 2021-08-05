@@ -47,9 +47,9 @@ public class S3Manager {
                 .build();
     }
 
-    public String uploadFile(MultipartFile file, String userName, String exerciseName) throws IOException {
+    public String uploadFile(MultipartFile file) throws IOException {
         String createdAt = DateUtils.parseDateToString(new Date());
-        String fileName = String.format("%s_%s_%s_%s", userName, exerciseName, createdAt, UUID.randomUUID().toString());
+        String fileName = String.format("%s_%s", createdAt, UUID.randomUUID().toString());
         byte[] bytes = IOUtils.toByteArray(file.getInputStream());
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 
@@ -63,7 +63,8 @@ public class S3Manager {
     }
 
     public void deleteFile(String url) {
-        if (s3Client.doesObjectExist(bucketName, url))
-            s3Client.deleteObject(bucketName, url);
+        String fileName = url.substring(url.lastIndexOf('/') + 1);
+        if (s3Client.doesObjectExist(bucketName, fileName))
+            s3Client.deleteObject(bucketName, fileName);
     }
 }

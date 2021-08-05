@@ -1,6 +1,6 @@
 package com.project.utils;
 
-import com.project.exception.ConnectionError;
+import com.project.exception.UnExpectedError;
 import com.project.exception.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
@@ -29,7 +29,7 @@ public class ConnectorUtils {
                 .onStatus(HttpStatus::isError, (responseError ->
                         responseError.bodyToMono(ErrorResponse.class)
                                 .map(parsingError -> {
-                                    throw new ConnectionError(parsingError);
+                                    throw new UnExpectedError(parsingError);
                                 })
                 )).bodyToMono(responseType);
     }

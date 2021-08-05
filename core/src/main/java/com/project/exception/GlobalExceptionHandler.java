@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    @ExceptionHandler(ConnectionError.class)
+    @ExceptionHandler(UnExpectedError.class)
     public ErrorResponse handleConnectionError(Exception e) {
         return new ErrorResponse(GlobalExceptionType.UNEXPECTED_SERVER_ERROR.getMessage(), GlobalExceptionType.UNEXPECTED_SERVER_ERROR.getCode());
     }

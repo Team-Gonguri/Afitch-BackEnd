@@ -1,6 +1,6 @@
 package com.project.api.exercise.response;
 
-import com.project.exercise.model.entity.dto.ExpertExerciseDto;
+import com.project.exercise.model.dto.ExpertExerciseDto;
 import com.project.exercise.model.entity.enums.ExerciseType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

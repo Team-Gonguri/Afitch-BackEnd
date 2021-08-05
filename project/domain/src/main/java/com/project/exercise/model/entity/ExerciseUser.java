@@ -3,11 +3,13 @@ package com.project.exercise.model.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.auth.model.entity.User;
 import com.project.exercise.model.entity.enums.PublicScope;
+import com.project.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.text.ParseException;
 import java.util.Date;
 
 @Getter
@@ -45,5 +47,13 @@ public class ExerciseUser {
 
     public void updateUrl(String url) {
         this.url = url;
+    }
+
+    public ExerciseUser(String url, PublicScope scope, Exercise exercise, User user) {
+        this.url = url;
+        this.scope = scope;
+        this.exercise = exercise;
+        this.user = user;
+        this.createdAt = DateUtils.now();
     }
 }

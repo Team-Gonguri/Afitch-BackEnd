@@ -39,7 +39,7 @@ public class ExerciseController {
             @RequestPart MultipartFile video,
             @PathVariable Long exerciseId,
             @RequestParam String open
-    ) throws ParseException, IOException {
+    ) throws  IOException {
         return new SaveExerciseResponse(
                 exerciseService.saveUserExerciseVideo(authInfo.getId(), exerciseId, video, open)
         );
