@@ -38,6 +38,9 @@ public class S3Manager {
     @Value("${cloud.aws.region.static}")
     private String region;
 
+    @Value("${cloud.aws.cloudfront}")
+    private String cloudFrontURL;
+
     @PostConstruct
     public void setS3Client() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
@@ -49,17 +52,19 @@ public class S3Manager {
 
     public String uploadFile(MultipartFile file) throws IOException {
         String createdAt = DateUtils.parseDateToString(new Date());
-        String fileName = String.format("%s_%s", createdAt, UUID.randomUUID().toString());
+        String fileName = String.format("%s-%s.mp4", createdAt, UUID.randomUUID().toString());
         byte[] bytes = IOUtils.toByteArray(file.getInputStream());
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(bytes.length);
         metadata.setContentType("video/mp4");
-
         s3Client.putObject(new PutObjectRequest(bucketName, fileName, byteArrayInputStream, metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
-        return s3Client.getUrl(bucketName, fileName).toString();
+
+
+        String s3URL = s3Client.getUrl(bucketName, fileName).toString();
+        return cloudFrontURL + (s3URL).substring(s3URL.lastIndexOf("/") + 1);
     }
 
     public void deleteFile(String url) {
