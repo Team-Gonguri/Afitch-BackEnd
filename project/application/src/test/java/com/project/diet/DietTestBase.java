@@ -22,7 +22,7 @@ public class DietTestBase extends CommonTestBase {
 
     protected MealDto createMeal(MealType type) throws ParseException {
         List<FoodWrapperDto> foodWrapperDto = getFoodWrapperDtoList();
-        return dietService.saveMeal(9999L, foodWrapperDto, type, DateUtils.parseDateToString(new Date()));
+        return dietService.saveMeal(9999L, foodWrapperDto, type, DateUtils.parseDateToSimpleString(new Date()));
     }
 
     protected List<FoodWrapperDto> getFoodWrapperDtoList() {

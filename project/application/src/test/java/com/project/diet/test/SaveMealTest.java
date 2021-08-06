@@ -18,7 +18,7 @@ public class SaveMealTest extends DietTestBase {
     @Test
     @DisplayName("특정 날짜 식단 저장하기 성공")
     public void getDietSuccess() throws Exception {
-        MealSaveRequest req = new MealSaveRequest(MealType.SNACK, getFoodWrapperDtoList(), DateUtils.parseDateToString(new Date()));
+        MealSaveRequest req = new MealSaveRequest(MealType.SNACK, getFoodWrapperDtoList(), DateUtils.parseDateToSimpleString(new Date()));
 
         mockMvc.perform(MockMvcRequestBuilders.post("/diets/meal")
                 .header("Authorization", "Bearer " + validAccessToken1)
@@ -57,7 +57,7 @@ public class SaveMealTest extends DietTestBase {
     @Test
     @DisplayName("특정 날짜 식단 저장하기 실패(존재하지 않는 사용자)")
     public void saveMealFailedBecauseUserNotExists() throws Exception {
-        MealSaveRequest req = new MealSaveRequest(MealType.SNACK, getFoodWrapperDtoList(), DateUtils.parseDateToString(new Date()));
+        MealSaveRequest req = new MealSaveRequest(MealType.SNACK, getFoodWrapperDtoList(), DateUtils.parseDateToSimpleString(new Date()));
         mockMvc.perform(MockMvcRequestBuilders.post("/diets/meal")
                 .header("Authorization", "Bearer " + notExistAccessToken)
                 .contentType(MediaType.APPLICATION_JSON)

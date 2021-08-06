@@ -22,7 +22,7 @@ public class GetDietTest extends DietTestBase {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/diets/diet")
                 .header("Authorization", "Bearer " + validAccessToken1)
-                .param("date", DateUtils.parseDateToString(new Date())))
+                .param("date", DateUtils.parseDateToSimpleString(new Date())))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("diet").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("ingredients").isNotEmpty());
@@ -43,7 +43,7 @@ public class GetDietTest extends DietTestBase {
     public void getDietFailedBecauseUserNotExists() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/diets/diet")
                 .header("Authorization", "Bearer " + notExistAccessToken)
-                .param("date", DateUtils.parseDateToString(new Date())))
+                .param("date", DateUtils.parseDateToSimpleString(new Date())))
                 .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andExpect(MockMvcResultMatchers.jsonPath("errorCode").value("USER-001"));
     }

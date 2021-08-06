@@ -35,3 +35,4 @@ cloud:
     bucket: ${CLOUD_AWS_BUCKET}
     region:
       static: ${CLOUD_AWS_REGION}
+    cloudfront: ${CLOUD_AWS_FRONT}

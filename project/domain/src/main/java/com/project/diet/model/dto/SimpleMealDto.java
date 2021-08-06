@@ -23,7 +23,7 @@ public class SimpleMealDto {
         this.id = meal.getId();
         this.type = meal.getType();
         this.foods = foodWrappers.stream().map(SimpleFoodWrapperDto::new).collect(Collectors.toList());
-        this.createdAt = DateUtils.parseDateToString(meal.getCreatedAt());
+        this.createdAt = DateUtils.parseDateToSimpleString(meal.getCreatedAt());
         this.ingredient = meal.getIngredient();
     }
 }

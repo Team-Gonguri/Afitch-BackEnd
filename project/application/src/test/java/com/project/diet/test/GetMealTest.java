@@ -23,7 +23,7 @@ public class GetMealTest extends DietTestBase {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("id").value(dto.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("type").value(dto.getType().toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("createdAt").value(DateUtils.parseDateToString(new Date())))
+                .andExpect(MockMvcResultMatchers.jsonPath("createdAt").value(DateUtils.parseDateToSimpleString(new Date())))
                 .andExpect(MockMvcResultMatchers.jsonPath("foods[0].food.id").value(dto.getFoods().get(0).getFood().getId()));
 
     }
