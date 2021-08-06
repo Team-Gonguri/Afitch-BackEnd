@@ -27,7 +27,7 @@ public class GetDietlTest extends DietTestBase {
         Mockito.doReturn(meals)
                 .when(mealRepository).findByUserAndCreatedAtOrderByTypeAsc(Mockito.any(), Mockito.any());
 
-        List<SimpleMealDto> simpleMealDto = Assertions.assertDoesNotThrow(() -> dietService.getDiet(1L, DateUtils.parseDateToString(new Date())));
+        List<SimpleMealDto> simpleMealDto = Assertions.assertDoesNotThrow(() -> dietService.getDiet(1L, DateUtils.parseDateToSimpleString(new Date())));
         Assertions.assertEquals(4, simpleMealDto.size());
         Assertions.assertAll(
                 () -> {
@@ -43,6 +43,6 @@ public class GetDietlTest extends DietTestBase {
         Mockito.doReturn(Optional.empty())
                 .when(userRepository).findById(Mockito.anyLong());
 
-        Assertions.assertThrows(UserNotExistsException.class, () -> dietService.getDiet(1L, DateUtils.parseDateToString(new Date())));
+        Assertions.assertThrows(UserNotExistsException.class, () -> dietService.getDiet(1L, DateUtils.parseDateToSimpleString(new Date())));
     }
 }

@@ -30,6 +30,6 @@ public class SaveMealTest extends DietTestBase {
         Mockito.doReturn(List.of())
                 .when(foodWrapperRepository).saveAll(Mockito.anyCollection());
 
-        Assertions.assertDoesNotThrow(() -> dietService.saveMeal(1L, List.of(foodWrapperDto), MealType.BREAKFAST, DateUtils.parseDateToString(new Date())));
+        Assertions.assertDoesNotThrow(() -> dietService.saveMeal(1L, List.of(foodWrapperDto), MealType.BREAKFAST, DateUtils.parseDateToSimpleString(new Date())));
     }
 }

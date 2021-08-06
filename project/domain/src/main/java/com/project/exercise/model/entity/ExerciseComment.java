@@ -30,4 +30,8 @@ public class ExerciseComment {
     @Column
     private Date createdAt;
 
+    public void updateComment(String text){
+        this.text = text;
+    }
+
 }

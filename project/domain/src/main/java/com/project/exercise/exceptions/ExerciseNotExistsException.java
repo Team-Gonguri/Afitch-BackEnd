@@ -1,4 +1,4 @@
-package com.project.diet.exceptions;
+package com.project.exercise.exceptions;
 
 public class ExerciseNotExistsException extends RuntimeException {
     public ExerciseNotExistsException() {

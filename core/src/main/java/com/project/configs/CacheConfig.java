@@ -10,9 +10,19 @@ import java.time.Duration;
 @Configuration
 public class CacheConfig {
     @Bean
-    CaffeineCache caffeineCache() {
+    CaffeineCache food_categories_caffeineCache() {
         return new CaffeineCache(
                 "food_categories",
+                Caffeine.newBuilder()
+                        .expireAfterWrite(Duration.ofDays(30))
+                        .maximumSize(20)
+                        .build());
+    }
+
+    @Bean
+    CaffeineCache exercise_list_caffeineCache() {
+        return new CaffeineCache(
+                "exercise_list",
                 Caffeine.newBuilder()
                         .expireAfterWrite(Duration.ofDays(30))
                         .maximumSize(20)

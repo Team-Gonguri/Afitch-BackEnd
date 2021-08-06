@@ -1,6 +1,6 @@
 package com.project.exercise.model.entity;
 
-import com.project.exercise.model.entity.enums.ExerciseType;
+import com.project.exercise.model.entity.enums.ExerciseCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +26,7 @@ public class Exercise {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private ExerciseType type;
+    private ExerciseCategory type;
 
 
 }

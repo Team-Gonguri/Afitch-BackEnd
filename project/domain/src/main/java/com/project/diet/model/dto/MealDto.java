@@ -22,7 +22,7 @@ public class MealDto {
         this.id = meal.getId();
         this.type = meal.getType();
         this.foods = foodWrappers;
-        this.createdAt = DateUtils.parseDateToString(meal.getCreatedAt());
+        this.createdAt = DateUtils.parseDateToSimpleString(meal.getCreatedAt());
         this.ingredient = meal.getIngredient();
     }
 }

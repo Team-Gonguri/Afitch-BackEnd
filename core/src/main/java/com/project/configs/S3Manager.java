@@ -51,7 +51,7 @@ public class S3Manager {
     }
 
     public String uploadFile(MultipartFile file) throws IOException {
-        String createdAt = DateUtils.parseDateToString(new Date());
+        String createdAt = DateUtils.parseDateToSimpleString(new Date());
         String fileName = String.format("%s-%s.mp4", createdAt, UUID.randomUUID().toString());
         byte[] bytes = IOUtils.toByteArray(file.getInputStream());
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);

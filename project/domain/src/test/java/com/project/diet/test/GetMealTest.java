@@ -33,7 +33,7 @@ public class GetMealTest extends DietTestBase {
 
         MealDto mealDto = Assertions.assertDoesNotThrow(() -> dietService.getMeal(1L, 1L));
         Assertions.assertEquals(meal.getType(), mealDto.getType());
-        Assertions.assertEquals(DateUtils.parseDateToString(meal.getCreatedAt()), mealDto.getCreatedAt());
+        Assertions.assertEquals(DateUtils.parseDateToSimpleString(meal.getCreatedAt()), mealDto.getCreatedAt());
     }
 
     @Test

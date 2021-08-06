@@ -6,8 +6,13 @@ import com.project.exercise.model.entity.ExerciseUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public interface ExerciseUserRepository extends JpaRepository<ExerciseUser, Long> {
     Optional<ExerciseUser> findByExerciseAndUserAndCreatedAt(Exercise exercise, User user, Date createdAt);
+
+    List<ExerciseUser> findAllByExerciseOrderByIdDesc(Exercise exercise);
+
+    List<ExerciseUser> findAllByExerciseOrderByScoreDesc(Exercise exercise);
 }

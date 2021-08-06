@@ -7,19 +7,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtils {
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+    private static SimpleDateFormat detailDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    public static String parseDateToString(Date date) {
-        return dateFormat.format(date);
+    public static String parseDateToSimpleString(Date date) {
+        return simpleDateFormat.format(date);
     }
 
     public static Date parseStringToDate(String string) throws ParseException {
-        return dateFormat.parse(string);
+        return simpleDateFormat.parse(string);
+    }
+
+    public static String parseDateToDetailString(Date date){
+        return detailDateFormat.format(date);
     }
 
     public static Date now() {
         try {
-            return parseStringToDate(parseDateToString(new Date()));
+            return parseStringToDate(parseDateToSimpleString(new Date()));
         } catch (ParseException e) {
             throw new UnExpectedError("Unexpected Date Parsing Error");
         }
