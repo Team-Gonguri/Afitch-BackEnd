@@ -11,6 +11,7 @@ import com.project.exercise.exceptions.ExerciseUserNotExistsException;
 import com.project.exercise.model.dto.ExerciseUserDto;
 import com.project.exercise.model.dto.SimpleExerciseUserDto;
 import com.project.exercise.model.entity.Exercise;
+import com.project.exercise.model.entity.ExerciseComment;
 import com.project.exercise.model.entity.ExerciseUser;
 import com.project.exercise.model.entity.enums.OrderType;
 import com.project.exercise.model.entity.enums.PublicScope;
@@ -70,10 +71,11 @@ public class ExerciseUserService {
     public void deleteExerciseUserVideo(Long userId, Long exerciseUserId) {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
         ExerciseUser exerciseUser = exerciseUserRepository.findById(exerciseUserId).orElseThrow(ExerciseCommentNotExistsException::new);
-
+        List<ExerciseComment> comments = exerciseCommentRepository.findAllByExerciseUser(exerciseUser);
         if (!exerciseUser.getUser().equals(user))
             throw new NotYourContentsException();
         s3Manager.deleteFile(exerciseUser.getUrl());
+        exerciseCommentRepository.deleteInBatch(comments);
         exerciseUserRepository.delete(exerciseUser);
     }
 
