@@ -1,6 +1,7 @@
 package com.project.api.exercise.controller;
 
-import com.project.api.exercise.request.UpdateCommentRequest;
+import com.project.api.exercise.request.ExerciseCommentRequest;
+import com.project.api.exercise.response.ExerciseCommentResponse;
 import com.project.exercise.service.ExerciseCommentService;
 import com.project.security.AuthInfo;
 import com.project.security.Authenticated;
@@ -13,24 +14,38 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/exercises/{exerciseId}/users/{exerciseUserId}/comment/{commentId}")
+@RequestMapping("/exercises/{exerciseId}/users/{exerciseUserId}/comment")
 public class ExerciseCommentController {
 
     private final ExerciseCommentService exerciseCommentService;
 
-    @PutMapping
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation("댓글 작성")
+    public ExerciseCommentResponse saveComment(
+            @Authenticated AuthInfo authInfo,
+            @PathVariable Long exerciseId,
+            @PathVariable Long exerciseUserId,
+            @Valid @RequestBody ExerciseCommentRequest req) {
+        return new ExerciseCommentResponse(
+                exerciseCommentService.saveComment(authInfo.getId(), exerciseUserId, req.getText())
+        );
+    }
+
+    @PutMapping("/{commentId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("댓글 수정")
-    public void updateComment(
+    public ExerciseCommentResponse updateComment(
+            @Authenticated AuthInfo authInfo,
             @PathVariable Long exerciseId,
             @PathVariable Long exerciseUserId,
             @PathVariable Long commentId,
-            @Valid @RequestBody UpdateCommentRequest req
+            @Valid @RequestBody ExerciseCommentRequest req
     ) {
-        exerciseCommentService.updateComments(commentId, req.getText());
+        return new ExerciseCommentResponse(exerciseCommentService.updateComment(authInfo.getId(), commentId, req.getText()));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{commentId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("댓글 삭제")
     public void deleteComment(

@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,9 +34,22 @@ public class ExerciseCommentService {
     }
 
     @Transactional
-    public void updateComments(Long commentId, String text) {
-        ExerciseComment exerciseComment = exerciseCommentRepository.findById(commentId).orElseThrow(ExerciseCommentNotExistsException::new);
-        exerciseComment.updateComment(text);
+    public ExerciseCommentDto saveComment(Long userId, Long exerciseUserId, String text) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
+        ExerciseUser exerciseUser = exerciseUserRepository.findById(exerciseUserId).orElseThrow(ExerciseUserNotExistsException::new);
+        ExerciseComment comment = exerciseCommentRepository.save(new ExerciseComment(null, exerciseUser, user, text, new Date()));
+
+        return new ExerciseCommentDto(comment);
+    }
+
+    @Transactional
+    public ExerciseCommentDto updateComment(Long userId, Long commentId, String text) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
+        ExerciseComment comment = exerciseCommentRepository.findById(commentId).orElseThrow(ExerciseCommentNotExistsException::new);
+        if (!comment.getUser().equals(user))
+            throw new NotYourContentsException();
+        comment.updateComment(text);
+        return new ExerciseCommentDto(comment);
     }
 
     @Transactional
