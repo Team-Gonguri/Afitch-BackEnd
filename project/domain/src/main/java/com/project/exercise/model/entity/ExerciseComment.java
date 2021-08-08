@@ -19,7 +19,7 @@ public class ExerciseComment {
     private Long id;
 
     @ManyToOne
-    private ExerciseUser exerciseUser;
+    private ExerciseParticipation exerciseParticipation;
 
     @ManyToOne
     private User user;

@@ -1,6 +1,5 @@
 package com.project.exercise.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.auth.model.entity.User;
 import com.project.exercise.model.entity.enums.PublicScope;
 import com.project.utils.DateUtils;
@@ -9,15 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.text.ParseException;
 import java.util.Date;
 
 @Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "exercise_users")
-public class ExerciseUser {
+@Table(name = "exercise_participation")
+public class ExerciseParticipation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +47,7 @@ public class ExerciseUser {
         this.url = url;
     }
 
-    public ExerciseUser(String url, PublicScope scope, Exercise exercise, User user) {
+    public ExerciseParticipation(String url, PublicScope scope, Exercise exercise, User user) {
         this.url = url;
         this.scope = scope;
         this.exercise = exercise;

@@ -1,6 +1,6 @@
 package com.project.api.exercise.response;
 
-import com.project.exercise.model.dto.ExerciseUserDto;
+import com.project.exercise.model.dto.DetailExerciseParticipationDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class SaveExerciseResponse {
     @ApiModelProperty("트레이너 운동 영상 URL")
     private String expertURL;
 
-    public SaveExerciseResponse(ExerciseUserDto dto) {
+    public SaveExerciseResponse(DetailExerciseParticipationDto dto) {
         this.id = dto.getId();
         this.name = dto.getExerciseName();
         this.userURL = dto.getUserURL();

@@ -48,6 +48,9 @@ public class AuthService {
     }
 
     public TokenDto signUp(SignUpDto signUpDto) {
+        if(userRepository.existsByAccountId(signUpDto.getAccountId()))
+            throw new
+
         User user =
                 userRepository.save(
                         new User(

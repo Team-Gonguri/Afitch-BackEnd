@@ -9,13 +9,13 @@ import lombok.Getter;
 public class DetailExerciseDto {
     private Long id;
     private String name;
-    private ExerciseCategory type;
+    private ExerciseCategory category;
     private String url;
 
-    public DetailExerciseDto(Exercise exercise){
+    public DetailExerciseDto(Exercise exercise) {
         this.id = exercise.getId();
         this.name = exercise.getName();
-        this.type =  exercise.getType();
+        this.category = exercise.getCategory();
         this.url = exercise.getUrl();
     }
 }

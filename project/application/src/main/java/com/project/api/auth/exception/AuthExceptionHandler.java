@@ -1,5 +1,7 @@
 package com.project.api.auth.exception;
 
+import com.project.auth.exceptions.AccountAlreadyExistException;
+import com.project.auth.exceptions.NickNameAlreadyExistException;
 import com.project.exception.ErrorResponse;
 import com.project.auth.exceptions.InvalidRefreshTokenException;
 import com.project.auth.exceptions.WrongAccountInfoException;
@@ -21,5 +23,17 @@ public class AuthExceptionHandler {
     @ExceptionHandler(InvalidRefreshTokenException.class)
     public ErrorResponse handlerRefreshTokenExpiredException(Exception e) {
         return new ErrorResponse(AuthExceptionType.INVALID_REFRESH.getMessage(), AuthExceptionType.INVALID_REFRESH.getCode());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(AccountAlreadyExistException.class)
+    public ErrorResponse handleAccountAlreadyExistException(Exception e) {
+        return new ErrorResponse(AuthExceptionType.EXIST_ACCOUNT.getMessage(), AuthExceptionType.EXIST_ACCOUNT.getCode());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(NickNameAlreadyExistException.class)
+    public ErrorResponse handleNicknameAlreadyExistException(Exception e) {
+        return new ErrorResponse(AuthExceptionType.EXIST_ACCOUNT.getMessage(), AuthExceptionType.EXIST_NICKNAME.getCode());
     }
 }

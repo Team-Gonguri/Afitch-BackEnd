@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "exercise",indexes = @Index(name = "e_type",columnList = "type"))
+@Table(name = "exercise",indexes = @Index(name = "i_category",columnList = "category"))
 public class Exercise {
 
     @Id
@@ -26,7 +26,7 @@ public class Exercise {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private ExerciseCategory type;
+    private ExerciseCategory category;
 
 
 }

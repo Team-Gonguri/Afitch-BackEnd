@@ -30,7 +30,7 @@ public class ExerciseService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "exercise_list",key = "#category")
     public List<SimpleExerciseDto> getExercises(ExerciseCategory category){
-        return exerciseRepository.findAllByType(category).stream().map(SimpleExerciseDto::new).collect(Collectors.toList());
+        return exerciseRepository.findAllByCategory(category).stream().map(SimpleExerciseDto::new).collect(Collectors.toList());
     }
 
 

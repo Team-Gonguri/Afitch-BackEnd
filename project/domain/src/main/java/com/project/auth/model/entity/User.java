@@ -2,7 +2,6 @@ package com.project.auth.model.entity;
 
 
 import com.project.auth.model.dto.UserInfoDto;
-import com.project.auth.model.repository.UserRepository;
 import com.project.security.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +26,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(length = 20)
+    @Column(unique = true,length = 20)
     private String nickName;
 
     @Column

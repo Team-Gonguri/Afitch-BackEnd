@@ -1,13 +1,12 @@
 package com.project.api.admin.response;
 
+import com.project.exercise.model.dto.DetailExerciseDto;
 import com.project.exercise.model.entity.enums.ExerciseCategory;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 @ApiModel("운동 저장 응답")
 public class RegisterExerciseResponse {
     @ApiModelProperty("운동 식별자")
@@ -23,4 +22,11 @@ public class RegisterExerciseResponse {
     private String url;
 
 
+
+    public RegisterExerciseResponse(DetailExerciseDto dto){
+        this.id = dto.getId();
+        this.category = dto.getCategory();
+        this.name = dto.getName();
+        this.url = dto.getUrl();
+    }
 }

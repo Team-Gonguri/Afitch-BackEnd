@@ -13,13 +13,13 @@ public class DetailExerciseResponse {
     @ApiModelProperty("운동 이름")
     private String name;
     @ApiModelProperty("운동 부위")
-    private ExerciseCategory type;
+    private ExerciseCategory category;
     @ApiModelProperty("트레이너 운동 영상 URL")
     private String expertURL;
 
     public DetailExerciseResponse(DetailExerciseDto dto){
         this.name = dto.getName();
-        this.type = dto.getType();
+        this.category = dto.getCategory();
         this.expertURL = dto.getUrl();
     }
 }
