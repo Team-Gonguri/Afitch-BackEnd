@@ -8,6 +8,7 @@ import com.project.api.auth.response.SignInResponse;
 import com.project.auth.model.dto.SignInDto;
 import com.project.auth.model.dto.SignUpDto;
 import com.project.auth.service.AuthService;
+import com.project.security.enums.UserRole;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,11 +26,14 @@ public class AuthController {
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation("회원가입")
-    public SignInResponse signUp(@RequestBody @Valid SignUpRequest req) {
+    public SignInResponse signUp(@RequestBody @Valid SignUpRequest req,
+                                 @RequestParam UserRole role) {
         return new SignInResponse(authService.signUp(
                 new SignUpDto(req.getAccountId(),
                         req.getPassword(),
-                        req.getNickName())
+                        req.getNickName(),
+                        role,
+                        req.getAdminCode())
         ));
     }
 
@@ -64,5 +68,7 @@ public class AuthController {
     @GetMapping("/nickname-duplicate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("닉네임 중복확인")
-    public boolean checkNickNameDuplicate(@RequestParam String nickName) { return authService.isNickNameDuplicate(nickName); }
+    public boolean checkNickNameDuplicate(@RequestParam String nickName) {
+        return authService.isNickNameDuplicate(nickName);
+    }
 }
