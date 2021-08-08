@@ -22,11 +22,11 @@ public class SignInTest extends AuthTestBase {
 
     @BeforeEach
     public void setUp() {
-        SignUpRequest signUpRequest = new SignUpRequest("ktj7916", "1q2w3e4r!!", "ktj7916@naver.com");
+        SignUpRequest signUpRequest = new SignUpRequest("ktj7916", "1q2w3e4r!!", "ktj7916@naver.com","");
         authService.signUp(
                 new SignUpDto(signUpRequest.getAccountId(),
                         signUpRequest.getPassword(),
-                        signUpRequest.getNickName()));
+                        signUpRequest.getNickName(), UserRole.ROLE_USER, ""));
     }
 
 

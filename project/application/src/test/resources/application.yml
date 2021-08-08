@@ -1,4 +1,6 @@
 application:
+  admin:
+    code: ${ADMIN_CODE}
   jwt:
     secret: ${JWT_SECRET}
     validtime:
@@ -19,3 +21,12 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: create-drop
+cloud:
+  aws:
+    credentials:
+      accessKey: ${CLOUD_AWS_ACCESSKEY}
+      secretKey: ${CLOUD_AWS_SECRETKEY}
+    bucket: ${CLOUD_AWS_BUCKET}
+    region:
+      static: ${CLOUD_AWS_REGION}
+    cloudfront: ${CLOUD_AWS_FRONT}
