@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class RegisterExerciseRequest {
     @ApiModelProperty("운동 이름")
     private String name;
 
-    @NotEmpty
+    @NotNull
     @ApiModelProperty("운동 부위")
     private ExerciseCategory category;
 }

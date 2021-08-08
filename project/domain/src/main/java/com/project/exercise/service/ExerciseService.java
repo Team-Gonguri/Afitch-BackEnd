@@ -30,7 +30,7 @@ public class ExerciseService {
 
     @Transactional
     public DetailExerciseDto saveExercise(String name, ExerciseCategory category, MultipartFile video) throws IOException {
-        if (exerciseRepository.findByName(name))
+        if (exerciseRepository.existsByName(name))
             throw new ExerciseAlreadyExistsException();
 
         String url = s3Manager.uploadFile(video);

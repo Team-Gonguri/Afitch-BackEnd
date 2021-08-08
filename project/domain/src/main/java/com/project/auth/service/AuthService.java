@@ -66,7 +66,7 @@ public class AuthService {
                             UserRole.ROLE_USER
                     ));
         } else {
-            if (signUpDto.getAdminCode() != adminCode)
+            if (!signUpDto.getAdminCode().equals(adminCode))
                 throw new InvalidAdminCodeException();
             user = userRepository.save(
                     new User(
