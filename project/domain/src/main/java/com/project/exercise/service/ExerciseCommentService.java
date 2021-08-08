@@ -8,9 +8,9 @@ import com.project.exercise.exceptions.ExerciseCommentNotExistsException;
 import com.project.exercise.exceptions.ExerciseUserNotExistsException;
 import com.project.exercise.model.dto.ExerciseCommentDto;
 import com.project.exercise.model.entity.ExerciseComment;
-import com.project.exercise.model.entity.ExerciseUser;
+import com.project.exercise.model.entity.ExerciseParticipation;
 import com.project.exercise.model.repository.ExerciseCommentRepository;
-import com.project.exercise.model.repository.ExerciseUserRepository;
+import com.project.exercise.model.repository.ExerciseParticipationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,20 +24,20 @@ import java.util.stream.Collectors;
 public class ExerciseCommentService {
 
     private final UserRepository userRepository;
-    private final ExerciseUserRepository exerciseUserRepository;
+    private final ExerciseParticipationRepository exerciseParticipationRepository;
     private final ExerciseCommentRepository exerciseCommentRepository;
 
     @Transactional(readOnly = true)
     public List<ExerciseCommentDto> getComments(Long exerciseUserId) {
-        ExerciseUser exerciseUser = exerciseUserRepository.findById(exerciseUserId).orElseThrow(ExerciseUserNotExistsException::new);
-        return exerciseCommentRepository.findAllByExerciseUser(exerciseUser).stream().map(ExerciseCommentDto::new).collect(Collectors.toList());
+        ExerciseParticipation exerciseParticipation = exerciseParticipationRepository.findById(exerciseUserId).orElseThrow(ExerciseUserNotExistsException::new);
+        return exerciseCommentRepository.findAllByExerciseParticipation(exerciseParticipation).stream().map(ExerciseCommentDto::new).collect(Collectors.toList());
     }
 
     @Transactional
     public ExerciseCommentDto saveComment(Long userId, Long exerciseUserId, String text) {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
-        ExerciseUser exerciseUser = exerciseUserRepository.findById(exerciseUserId).orElseThrow(ExerciseUserNotExistsException::new);
-        ExerciseComment comment = exerciseCommentRepository.save(new ExerciseComment(null, exerciseUser, user, text, new Date()));
+        ExerciseParticipation exerciseParticipation = exerciseParticipationRepository.findById(exerciseUserId).orElseThrow(ExerciseUserNotExistsException::new);
+        ExerciseComment comment = exerciseCommentRepository.save(new ExerciseComment(null, exerciseParticipation, user, text, new Date()));
 
         return new ExerciseCommentDto(comment);
     }

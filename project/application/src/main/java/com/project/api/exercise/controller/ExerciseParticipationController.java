@@ -5,7 +5,7 @@ import com.project.api.exercise.response.SaveExerciseResponse;
 import com.project.api.exercise.response.SimpleExerciseUserListResponse;
 import com.project.exercise.model.entity.enums.OrderType;
 import com.project.exercise.service.ExerciseCommentService;
-import com.project.exercise.service.ExerciseUserService;
+import com.project.exercise.service.ExercisePartiipationService;
 import com.project.security.AuthInfo;
 import com.project.security.Authenticated;
 import io.swagger.annotations.ApiOperation;
@@ -19,23 +19,23 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/exercises/{exerciseId}/users")
-public class ExerciseUserController {
+@RequestMapping("/exercises/{exerciseId}/participation")
+public class ExerciseParticipationController {
 
-    private final ExerciseUserService exerciseUserService;
+    private final ExercisePartiipationService exercisePartiipationService;
     private final ExerciseCommentService exerciseCommentService;
 
-    @GetMapping("/{exerciseUserId}")
+    @GetMapping("/{participationId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("운동에 참여한 사용자 상세 정보 보기")
     public DetailExerciseUserResponse getDetailExerciseUser(
             @Authenticated AuthInfo authInfo,
             @PathVariable Long exerciseId,
-            @PathVariable Long exerciseUserId
+            @PathVariable Long participationId
     ) {
         return new DetailExerciseUserResponse(
-                exerciseUserService.getDetailExerciseUser(authInfo.getId(), exerciseUserId),
-                exerciseCommentService.getComments(exerciseUserId)
+                exercisePartiipationService.getDetailExerciseUser(authInfo.getId(), participationId),
+                exerciseCommentService.getComments(participationId)
         );
     }
 
@@ -48,7 +48,7 @@ public class ExerciseUserController {
             @RequestParam OrderType order
     ) {
         return new SimpleExerciseUserListResponse(
-                exerciseUserService.getExerciseUserList(exerciseId, order)
+                exercisePartiipationService.getExerciseUserList(exerciseId, order)
         );
     }
 
@@ -62,7 +62,7 @@ public class ExerciseUserController {
             @RequestParam String open
     ) throws IOException {
         return new SaveExerciseResponse(
-                exerciseUserService.saveExerciseUserVideo(authInfo.getId(), exerciseId, video, open)
+                exercisePartiipationService.saveExerciseUserVideo(authInfo.getId(), exerciseId, video, open)
         );
     }
 
@@ -74,6 +74,6 @@ public class ExerciseUserController {
             @PathVariable Long exerciseId,
             @PathVariable Long exerciseUserId) {
 
-        exerciseUserService.deleteExerciseUserVideo(authInfo.getId(), exerciseUserId);
+        exercisePartiipationService.deleteExerciseUserVideo(authInfo.getId(), exerciseUserId);
     }
 }

@@ -1,5 +1,6 @@
 package com.project.auth.service;
 
+import com.project.auth.exceptions.NickNameAlreadyExistException;
 import com.project.auth.exceptions.NotPositiveNumberException;
 import com.project.auth.exceptions.UserNotExistsException;
 import com.project.auth.model.dto.UserInfoDto;
@@ -27,6 +28,9 @@ public class UserService {
 
         if (dto.getHeight() <= 0 || dto.getWeight() <= 0)
             throw new NotPositiveNumberException();
+        if (!dto.getNickName().equals(user.getNickName()) && userRepository.existsByNickName(dto.getNickName()))
+            throw new NickNameAlreadyExistException();
+
         user.updateInfo(dto);
         return new UserInfoDto(user);
     }

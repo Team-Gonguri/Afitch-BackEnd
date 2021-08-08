@@ -8,16 +8,16 @@ import com.project.exception.NotYourContentsException;
 import com.project.exercise.exceptions.ExerciseCommentNotExistsException;
 import com.project.exercise.exceptions.ExerciseNotExistsException;
 import com.project.exercise.exceptions.ExerciseUserNotExistsException;
-import com.project.exercise.model.dto.ExerciseUserDto;
-import com.project.exercise.model.dto.SimpleExerciseUserDto;
+import com.project.exercise.model.dto.DetailExerciseParticipationDto;
+import com.project.exercise.model.dto.SimpleExerciseParticipationDto;
 import com.project.exercise.model.entity.Exercise;
 import com.project.exercise.model.entity.ExerciseComment;
-import com.project.exercise.model.entity.ExerciseUser;
+import com.project.exercise.model.entity.ExerciseParticipation;
 import com.project.exercise.model.entity.enums.OrderType;
 import com.project.exercise.model.entity.enums.PublicScope;
 import com.project.exercise.model.repository.ExerciseCommentRepository;
 import com.project.exercise.model.repository.ExerciseRepository;
-import com.project.exercise.model.repository.ExerciseUserRepository;
+import com.project.exercise.model.repository.ExerciseParticipationRepository;
 import com.project.utils.ConnectorUtils;
 import com.project.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
@@ -33,70 +33,70 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ExerciseUserService {
+public class ExercisePartiipationService {
 
     @Value("${application.vision.server}")
     private String visionServerURL;
     private final ExerciseRepository exerciseRepository;
-    private final ExerciseUserRepository exerciseUserRepository;
+    private final ExerciseParticipationRepository exerciseParticipationRepository;
     private final ExerciseCommentRepository exerciseCommentRepository;
     private final UserRepository userRepository;
     private final S3Manager s3Manager;
     private final ConnectorUtils connectorUtils;
 
     @Transactional
-    public ExerciseUserDto getDetailExerciseUser(Long userId, Long exerciseUserId) {
+    public DetailExerciseParticipationDto getDetailExerciseUser(Long userId, Long exerciseUserId) {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
-        ExerciseUser exerciseUser = exerciseUserRepository.findById(exerciseUserId).orElseThrow(ExerciseUserNotExistsException::new);
+        ExerciseParticipation exerciseParticipation = exerciseParticipationRepository.findById(exerciseUserId).orElseThrow(ExerciseUserNotExistsException::new);
 
-        if (!exerciseUser.getUser().equals(user) && exerciseUser.getScope().equals(PublicScope.PRIVATE))
+        if (!exerciseParticipation.getUser().equals(user) && exerciseParticipation.getScope().equals(PublicScope.PRIVATE))
             throw new NotYourContentsException();
 
-        return new ExerciseUserDto(exerciseUser);
+        return new DetailExerciseParticipationDto(exerciseParticipation);
     }
 
     @Transactional(readOnly = true)
-    public List<SimpleExerciseUserDto> getExerciseUserList(Long exerciseId, OrderType type) {
+    public List<SimpleExerciseParticipationDto> getExerciseUserList(Long exerciseId, OrderType type) {
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
-        List<ExerciseUser> exerciseUsers;
+        List<ExerciseParticipation> exerciseParticipations;
         if (type.equals(OrderType.LATEST))
-            exerciseUsers = exerciseUserRepository.findAllByExerciseOrderByIdDesc(exercise);
+            exerciseParticipations = exerciseParticipationRepository.findAllByExerciseOrderByIdDesc(exercise);
         else
-            exerciseUsers = exerciseUserRepository.findAllByExerciseOrderByScoreDesc(exercise);
+            exerciseParticipations = exerciseParticipationRepository.findAllByExerciseOrderByScoreDesc(exercise);
 
-        return exerciseUsers.stream().map(SimpleExerciseUserDto::new).collect(Collectors.toList());
+        return exerciseParticipations.stream().map(SimpleExerciseParticipationDto::new).collect(Collectors.toList());
     }
 
     @Transactional
     public void deleteExerciseUserVideo(Long userId, Long exerciseUserId) {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
-        ExerciseUser exerciseUser = exerciseUserRepository.findById(exerciseUserId).orElseThrow(ExerciseCommentNotExistsException::new);
-        List<ExerciseComment> comments = exerciseCommentRepository.findAllByExerciseUser(exerciseUser);
-        if (!exerciseUser.getUser().equals(user))
+        ExerciseParticipation exerciseParticipation = exerciseParticipationRepository.findById(exerciseUserId).orElseThrow(ExerciseCommentNotExistsException::new);
+        List<ExerciseComment> comments = exerciseCommentRepository.findAllByExerciseParticipation(exerciseParticipation);
+        if (!exerciseParticipation.getUser().equals(user))
             throw new NotYourContentsException();
-        s3Manager.deleteFile(exerciseUser.getUrl());
+        s3Manager.deleteFile(exerciseParticipation.getUrl());
         exerciseCommentRepository.deleteInBatch(comments);
-        exerciseUserRepository.delete(exerciseUser);
+        exerciseParticipationRepository.delete(exerciseParticipation);
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public ExerciseUserDto saveExerciseUserVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws IOException {
+    public DetailExerciseParticipationDto saveExerciseUserVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws IOException {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
         String url = s3Manager.uploadFile(video);
-        ExerciseUser exerciseUser = exerciseUserRepository.findByExerciseAndUserAndCreatedAt(exercise, user, DateUtils.now()).orElseGet(() -> exerciseUserRepository.save(new ExerciseUser(url, PublicScope.valueOf(open), exercise, user)));
+        ExerciseParticipation exerciseParticipation = exerciseParticipationRepository.findByExerciseAndUserAndCreatedAt(exercise, user, DateUtils.now()).orElseGet(() -> exerciseParticipationRepository.save(new ExerciseParticipation(url, PublicScope.valueOf(open), exercise, user)));
         connectorUtils.send(HttpMethod.POST, visionServerURL, url, String.class, Integer.class)
-                .subscribe(score -> updateScoreAsynchronous(score, url, exerciseUser));
+                .subscribe(score -> updateScoreAsynchronous(score, url, exerciseParticipation));
 
-        return new ExerciseUserDto(exerciseUser, url);
+        return new DetailExerciseParticipationDto(exerciseParticipation, url);
     }
 
-    private void updateScoreAsynchronous(int score, String url, ExerciseUser exerciseUser) {
-        if (score > exerciseUser.getScore()) {
-            s3Manager.deleteFile(exerciseUser.getUrl());
-            exerciseUser.updateScore(score);
-            exerciseUser.updateUrl(url);
-            exerciseUserRepository.save(exerciseUser);
+    private void updateScoreAsynchronous(int score, String url, ExerciseParticipation exerciseParticipation) {
+        if (score > exerciseParticipation.getScore()) {
+            s3Manager.deleteFile(exerciseParticipation.getUrl());
+            exerciseParticipation.updateScore(score);
+            exerciseParticipation.updateUrl(url);
+            exerciseParticipationRepository.save(exerciseParticipation);
         } else
             s3Manager.deleteFile(url);
     }

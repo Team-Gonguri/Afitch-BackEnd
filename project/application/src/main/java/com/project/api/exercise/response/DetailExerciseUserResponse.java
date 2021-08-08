@@ -1,10 +1,9 @@
 package com.project.api.exercise.response;
 
 import com.project.exercise.model.dto.ExerciseCommentDto;
-import com.project.exercise.model.dto.ExerciseUserDto;
+import com.project.exercise.model.dto.DetailExerciseParticipationDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class DetailExerciseUserResponse {
     @ApiModelProperty("댓글들")
     private List<ExerciseCommentDto> comments;
 
-    public DetailExerciseUserResponse(ExerciseUserDto exerciseUsers, List<ExerciseCommentDto> comments) {
+    public DetailExerciseUserResponse(DetailExerciseParticipationDto exerciseUsers, List<ExerciseCommentDto> comments) {
         this.id = exerciseUsers.getId();
         this.nickName = exerciseUsers.getNickName();
         this.exerciseName = exerciseUsers.getExerciseName();
