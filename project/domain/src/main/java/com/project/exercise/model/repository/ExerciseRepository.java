@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     List<Exercise> findAllByCategory(ExerciseCategory category);
+
+    boolean findByName(String name);
 }

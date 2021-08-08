@@ -1,8 +1,8 @@
 package com.project.api.admin.controller;
 
-import com.project.admin.service.AdminService;
 import com.project.api.admin.request.RegisterExerciseRequest;
 import com.project.api.admin.response.RegisterExerciseResponse;
+import com.project.exercise.service.ExerciseService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final AdminService adminService;
+    private final ExerciseService exerciseService;
 
     @PostMapping(value = "/exercise", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation("운동 저장")
@@ -29,7 +29,7 @@ public class AdminController {
             @Valid @RequestPart RegisterExerciseRequest req
     ) throws IOException {
         return new RegisterExerciseResponse(
-                adminService.saveExercise(req.getName(), req.getCategory(), video)
+                exerciseService.saveExercise(req.getName(), req.getCategory(), video)
         );
     }
 }
