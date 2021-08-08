@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/exercises/{exerciseId}/users/{exerciseUserId}/comment")
+@RequestMapping("/exercises/{exerciseId}/participation/{participationId}/comment")
 public class ExerciseCommentController {
 
     private final ExerciseCommentService exerciseCommentService;
@@ -25,10 +25,10 @@ public class ExerciseCommentController {
     public ExerciseCommentResponse saveComment(
             @Authenticated AuthInfo authInfo,
             @PathVariable Long exerciseId,
-            @PathVariable Long exerciseUserId,
+            @PathVariable Long participationId,
             @Valid @RequestBody ExerciseCommentRequest req) {
         return new ExerciseCommentResponse(
-                exerciseCommentService.saveComment(authInfo.getId(), exerciseUserId, req.getText())
+                exerciseCommentService.saveComment(authInfo.getId(), participationId, req.getText())
         );
     }
 
@@ -38,7 +38,7 @@ public class ExerciseCommentController {
     public ExerciseCommentResponse updateComment(
             @Authenticated AuthInfo authInfo,
             @PathVariable Long exerciseId,
-            @PathVariable Long exerciseUserId,
+            @PathVariable Long participationId,
             @PathVariable Long commentId,
             @Valid @RequestBody ExerciseCommentRequest req
     ) {
@@ -51,7 +51,7 @@ public class ExerciseCommentController {
     public void deleteComment(
             @Authenticated AuthInfo authInfo,
             @PathVariable Long exerciseId,
-            @PathVariable Long exerciseUserId,
+            @PathVariable Long participationId,
             @PathVariable Long commentId
     ) {
         exerciseCommentService.deleteComment(authInfo.getId(), commentId);

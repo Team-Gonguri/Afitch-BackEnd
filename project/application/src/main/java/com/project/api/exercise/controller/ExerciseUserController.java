@@ -19,23 +19,23 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/exercises/{exerciseId}/users")
+@RequestMapping("/exercises/{exerciseId}/participation")
 public class ExerciseUserController {
 
     private final ExerciseUserService exerciseUserService;
     private final ExerciseCommentService exerciseCommentService;
 
-    @GetMapping("/{exerciseUserId}")
+    @GetMapping("/{participationId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("운동에 참여한 사용자 상세 정보 보기")
     public DetailExerciseUserResponse getDetailExerciseUser(
             @Authenticated AuthInfo authInfo,
             @PathVariable Long exerciseId,
-            @PathVariable Long exerciseUserId
+            @PathVariable Long participationId
     ) {
         return new DetailExerciseUserResponse(
-                exerciseUserService.getDetailExerciseUser(authInfo.getId(), exerciseUserId),
-                exerciseCommentService.getComments(exerciseUserId)
+                exerciseUserService.getDetailExerciseUser(authInfo.getId(), participationId),
+                exerciseCommentService.getComments(participationId)
         );
     }
 
