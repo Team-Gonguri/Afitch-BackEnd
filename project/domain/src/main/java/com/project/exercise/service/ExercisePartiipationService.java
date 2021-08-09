@@ -16,8 +16,8 @@ import com.project.exercise.model.entity.ExerciseParticipation;
 import com.project.exercise.model.entity.enums.OrderType;
 import com.project.exercise.model.entity.enums.PublicScope;
 import com.project.exercise.model.repository.ExerciseCommentRepository;
-import com.project.exercise.model.repository.ExerciseRepository;
 import com.project.exercise.model.repository.ExerciseParticipationRepository;
+import com.project.exercise.model.repository.ExerciseRepository;
 import com.project.utils.ConnectorUtils;
 import com.project.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,6 +78,12 @@ public class ExercisePartiipationService {
         s3Manager.deleteFile(exerciseParticipation.getUrl());
         exerciseCommentRepository.deleteInBatch(comments);
         exerciseParticipationRepository.delete(exerciseParticipation);
+    }
+
+    @Transactional
+    public List<SimpleExerciseParticipationDto> getTodayTop4Participation(Long userId) throws ParseException {
+        User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
+        return exerciseParticipationRepository.findTop4ByUserAndCreatedAtOrderByScoreDesc(user, DateUtils.now()).stream().map(SimpleExerciseParticipationDto::new).collect(Collectors.toList());
     }
 
     @Transactional(rollbackFor = {Exception.class})

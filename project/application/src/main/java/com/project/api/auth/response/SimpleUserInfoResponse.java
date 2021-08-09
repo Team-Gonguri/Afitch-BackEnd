@@ -1,15 +1,16 @@
 package com.project.api.auth.response;
 
 import com.project.auth.model.dto.UserInfoDto;
-import lombok.Getter;
+import com.project.exercise.model.dto.SimpleExerciseParticipationDto;
 
-@Getter
-public class UserInfoResponse {
+import java.util.List;
+
+public class SimpleUserInfoResponse {
     private String nickName;
     private double weight;
     private double height;
 
-    public UserInfoResponse(UserInfoDto userInfoDto) {
+    public SimpleUserInfoResponse(UserInfoDto userInfoDto) {
         nickName = userInfoDto.getNickName();
         weight = userInfoDto.getWeight();
         height = userInfoDto.getHeight();
