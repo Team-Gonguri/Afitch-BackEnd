@@ -60,7 +60,7 @@ public class ExerciseParticipationController {
             @RequestPart MultipartFile video,
             @PathVariable Long exerciseId,
             @RequestParam String open
-    ) throws IOException {
+    ) throws IOException, InterruptedException {
         return new SaveExerciseResponse(
                 exercisePartiipationService.saveExerciseUserVideo(authInfo.getId(), exerciseId, video, open)
         );

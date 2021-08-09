@@ -87,14 +87,17 @@ public class ExercisePartiipationService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public DetailExerciseParticipationDto saveExerciseUserVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws IOException {
+    public DetailExerciseParticipationDto saveExerciseUserVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws IOException, InterruptedException {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
         String url = s3Manager.uploadFile(video);
         ExerciseParticipation exerciseParticipation = exerciseParticipationRepository.findByExerciseAndUserAndCreatedAt(exercise, user, DateUtils.now()).orElseGet(() -> exerciseParticipationRepository.save(new ExerciseParticipation(url, PublicScope.valueOf(open), exercise, user)));
+        /*
         connectorUtils.send(HttpMethod.POST, visionServerURL, url, String.class, Integer.class)
                 .subscribe(score -> updateScoreAsynchronous(score, url, exerciseParticipation));
-
+        */
+        Thread.sleep(10000);
+        updateScoreAsynchronous((int)(Math.random() * 100),url,exerciseParticipation);
         return new DetailExerciseParticipationDto(exerciseParticipation, url);
     }
 
