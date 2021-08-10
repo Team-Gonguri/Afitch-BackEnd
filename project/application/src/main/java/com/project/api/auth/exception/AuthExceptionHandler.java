@@ -31,7 +31,7 @@ public class AuthExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(NickNameAlreadyExistException.class)
     public ErrorResponse handleNicknameAlreadyExistException(Exception e) {
-        return new ErrorResponse(AuthExceptionType.EXIST_ACCOUNT.getMessage(), AuthExceptionType.EXIST_NICKNAME.getCode());
+        return new ErrorResponse(AuthExceptionType.EXIST_NICKNAME.getMessage(), AuthExceptionType.EXIST_NICKNAME.getCode());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
