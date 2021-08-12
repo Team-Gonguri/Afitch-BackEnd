@@ -37,8 +37,8 @@ public class SignInTest extends AuthTestBase {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(validSignInRequest)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("accessToken").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("refreshToken").isString());
+                .andExpect(MockMvcResultMatchers.jsonPath("access.token").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("refresh.token").isString());
     }
 
     @Test

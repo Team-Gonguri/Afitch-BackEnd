@@ -1,22 +1,21 @@
 package com.project.api.auth.response;
 
 import com.project.auth.model.dto.TokenDto;
+import com.project.security.JwtTokenDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 @ApiModel("로그인 응답")
-public class SignInResponse {
+public class TokenResponse {
     @ApiModelProperty("AccessToken")
-    private String accessToken;
+    private JwtTokenDto access;
     @ApiModelProperty("RefreshToken")
-    private String refreshToken;
+    private JwtTokenDto refresh;
 
-    public SignInResponse(TokenDto tokenDto) {
-        this.accessToken = tokenDto.getAccessToken();
-        this.refreshToken = tokenDto.getRefreshToken();
+    public TokenResponse(TokenDto dto){
+        this.access = dto.getAccess();
+        this.refresh = dto.getRefresh();
     }
 }
