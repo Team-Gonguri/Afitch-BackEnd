@@ -25,8 +25,8 @@ public class SignInTest extends AuthTestBase {
         SignInDto signInDto = new SignInDto("ktj7916", "rawPassword");
         TokenDto tokenDto = Assertions.assertDoesNotThrow(() -> authService.signIn(signInDto));
         Assertions.assertNotNull(tokenDto);
-        Assertions.assertNotNull(tokenDto.getAccessToken());
-        Assertions.assertNotNull(tokenDto.getRefreshToken());
+        Assertions.assertNotNull(tokenDto.getAccess());
+        Assertions.assertNotNull(tokenDto.getRefresh());
     }
 
     @Test

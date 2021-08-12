@@ -21,7 +21,8 @@ public class RefreshTokenTest extends AuthTestBase {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(validRefreshToken)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("accessToken").isString());
+                .andExpect(MockMvcResultMatchers.jsonPath("access.token").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("access.expiredIn").isNumber());
     }
 
     @Test

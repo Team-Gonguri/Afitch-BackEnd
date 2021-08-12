@@ -2,6 +2,7 @@ package com.project.auth.test;
 
 import com.project.auth.AuthTestBase;
 import com.project.auth.exceptions.InvalidRefreshTokenException;
+import com.project.security.JwtTokenDto;
 import com.project.security.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ public class RefreshTest extends AuthTestBase {
         Mockito.doReturn(UserRole.ROLE_USER)
                 .when(jwtProvider).getRoleFromToken(Mockito.anyString());
 
-        String newAccessToken = Assertions.assertDoesNotThrow(() -> authService.refresh("validRefreshToken"));
+        JwtTokenDto newAccessToken = Assertions.assertDoesNotThrow(() -> authService.refresh("validRefreshToken"));
         Assertions.assertNotNull(newAccessToken);
     }
 

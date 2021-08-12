@@ -22,7 +22,7 @@ public class SignUpTest extends AuthTestBase {
         TokenDto tokenDto = Assertions.assertDoesNotThrow(() -> authService.signUp(signUpDto));
 
         Assertions.assertNotNull(tokenDto);
-        Assertions.assertNotNull(tokenDto.getAccessToken());
-        Assertions.assertNotNull(tokenDto.getRefreshToken());
+        Assertions.assertNotNull(tokenDto.getAccess());
+        Assertions.assertNotNull(tokenDto.getRefresh());
     }
 }

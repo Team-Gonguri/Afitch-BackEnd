@@ -4,7 +4,7 @@ import com.project.api.auth.request.RefreshRequest;
 import com.project.api.auth.request.SignInRequest;
 import com.project.api.auth.request.SignUpRequest;
 import com.project.api.auth.response.RefreshResponse;
-import com.project.api.auth.response.SignInResponse;
+import com.project.api.auth.response.TokenResponse;
 import com.project.auth.model.dto.SignInDto;
 import com.project.auth.model.dto.SignUpDto;
 import com.project.auth.service.AuthService;
@@ -26,9 +26,10 @@ public class AuthController {
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation("회원가입")
-    public SignInResponse signUp(@RequestBody @Valid SignUpRequest req,
-                                 @RequestParam UserRole role) {
-        return new SignInResponse(authService.signUp(
+    public TokenResponse signUp(@RequestBody @Valid SignUpRequest req,
+                                @RequestParam UserRole role) {
+        return new TokenResponse(
+                authService.signUp(
                 new SignUpDto(req.getAccountId(),
                         req.getPassword(),
                         req.getNickName(),
@@ -40,8 +41,8 @@ public class AuthController {
     @PostMapping("/sign-in")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("로그인")
-    public SignInResponse signIn(@RequestBody @Valid SignInRequest req) {
-        return new SignInResponse(authService.signIn(
+    public TokenResponse signIn(@RequestBody @Valid SignInRequest req) {
+        return new TokenResponse(authService.signIn(
                 new SignInDto(
                         req.getAccountId(),
                         req.getPassword()
