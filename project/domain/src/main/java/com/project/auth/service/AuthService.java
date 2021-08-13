@@ -7,6 +7,7 @@ import com.project.auth.model.dto.TokenDto;
 import com.project.auth.model.entity.User;
 import com.project.auth.model.repository.UserRepository;
 import com.project.security.JwtProvider;
+import com.project.security.JwtTokenDto;
 import com.project.security.enums.TokenType;
 import com.project.security.enums.UserRole;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -79,10 +82,10 @@ public class AuthService {
         return new TokenDto(
                 jwtProvider.getToken(user.getId(), user.getUserRole(), TokenType.ACCESS),
                 jwtProvider.getToken(user.getId(), user.getUserRole(), TokenType.REFRESH)
-        );
+                );
     }
 
-    public String refresh(String refreshToken) {
+    public JwtTokenDto refresh(String refreshToken) {
         try {
             if (jwtProvider.validateToken(refreshToken)) {
                 return jwtProvider.getToken(jwtProvider.getUserIdFromToken(refreshToken),

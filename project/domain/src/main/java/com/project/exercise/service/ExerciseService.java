@@ -9,6 +9,7 @@ import com.project.exercise.model.entity.Exercise;
 import com.project.exercise.model.entity.enums.ExerciseCategory;
 import com.project.exercise.model.repository.ExerciseRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class ExerciseService {
 
 
     @Transactional
+    @CacheEvict(cacheNames = "exercise_list",key = "#category")
     public DetailExerciseDto saveExercise(String name, ExerciseCategory category, MultipartFile video) throws IOException {
         if (exerciseRepository.existsByName(name))
             throw new ExerciseAlreadyExistsException();

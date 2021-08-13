@@ -52,7 +52,7 @@ public class JwtProvider {
         return getClaimsFromToken(token).get("id", Long.class);
     }
 
-    public String getToken(Long id, UserRole role, TokenType type) {
+    public JwtTokenDto getToken(Long id, UserRole role, TokenType type) {
         if (type.equals(TokenType.ACCESS))
             return generateToken(id, role, accessValidTime);
         else
@@ -64,16 +64,16 @@ public class JwtProvider {
         return new UsernamePasswordAuthenticationToken(getUserIdFromToken(token), "", List.of(getAuthorities(claim)));
     }
 
-    private String generateToken(Long id, UserRole role, Long validTime) {
+    private JwtTokenDto generateToken(Long id, UserRole role, Long validTime) {
         Date now = new Date();
         Date expire = new Date(now.getTime() + validTime);
-        return Jwts.builder()
+        return new JwtTokenDto(Jwts.builder()
                 .claim("id", id)
                 .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(expire)
                 .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
+                .compact(),expire.getTime());
     }
 
     public UserRole getRoleFromToken(String token) {

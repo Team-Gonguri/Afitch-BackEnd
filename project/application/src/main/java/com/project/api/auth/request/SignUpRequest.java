@@ -20,7 +20,7 @@ public class SignUpRequest {
     private String accountId;
 
     @NotEmpty
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[!-~₩]{8,16}$", message = "영문,숫자,특수문자가 포함되어야 하며, 8~16자 이내여야합니다.")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[!-~₩]{8,16}$", message = "영문,숫자,특수문자가 포함가능하며 , 8~16자 이내여야합니다.")
     @ApiModelProperty("비밀번호")
     private String password;
 
