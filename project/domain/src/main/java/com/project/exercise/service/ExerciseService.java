@@ -8,7 +8,9 @@ import com.project.exercise.model.dto.SimpleExerciseDto;
 import com.project.exercise.model.entity.Exercise;
 import com.project.exercise.model.entity.enums.ExerciseCategory;
 import com.project.exercise.model.repository.ExerciseRepository;
+import com.project.utils.ConnectorUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.rmi.ConnectIOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,9 +29,12 @@ public class ExerciseService {
 
     private final S3Manager s3Manager;
     private final ExerciseRepository exerciseRepository;
+    private final VisionService visionService;
+    private final ConnectorUtils connectorUtils;
 
 
     @Transactional
+    @CacheEvict(cacheNames ="exercise_list", key = "#category")
     public DetailExerciseDto saveExercise(String name, ExerciseCategory category, MultipartFile video) throws IOException {
         if (exerciseRepository.existsByName(name))
             throw new ExerciseAlreadyExistsException();
