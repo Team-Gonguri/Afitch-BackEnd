@@ -1,6 +1,7 @@
 package com.project.diet.model.dto;
 
 import com.project.diet.model.entity.Food;
+import com.project.diet.model.entity.Ingredient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,5 +37,9 @@ public class FoodDto {
         this.protein = food.getIngredients().getProtein();
         this.fat = food.getIngredients().getFat();
         this.carbohydrate = food.getIngredients().getCarbohydrate();
+    }
+
+    public Ingredient getIngredient() {
+        return new Ingredient(this.protein, this.fat, this.carbohydrate, this.calories);
     }
 }

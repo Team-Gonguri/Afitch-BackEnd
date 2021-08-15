@@ -11,7 +11,7 @@ public class SimpleFoodDto {
 
     private String name;
 
-    public SimpleFoodDto(Food food) {
+    public SimpleFoodDto(FoodDto food) {
         this.id = food.getId();
         this.name = food.getName();
 
