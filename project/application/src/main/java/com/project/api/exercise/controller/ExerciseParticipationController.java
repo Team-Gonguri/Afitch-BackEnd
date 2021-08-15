@@ -1,8 +1,8 @@
 package com.project.api.exercise.controller;
 
-import com.project.api.exercise.response.DetailExerciseUserResponse;
+import com.project.api.exercise.response.DetailExerciseParticipationResponse;
 import com.project.api.exercise.response.SaveExerciseResponse;
-import com.project.api.exercise.response.SimpleExerciseUserListResponse;
+import com.project.api.exercise.response.SimpleExerciseParticipationListResponse;
 import com.project.exercise.model.entity.enums.OrderType;
 import com.project.exercise.service.ExerciseCommentService;
 import com.project.exercise.service.ExercisePartiipationService;
@@ -28,12 +28,12 @@ public class ExerciseParticipationController {
     @GetMapping("/{participationId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("운동에 참여한 사용자 상세 정보 보기")
-    public DetailExerciseUserResponse getDetailExerciseUser(
+    public DetailExerciseParticipationResponse getDetailExerciseUser(
             @Authenticated AuthInfo authInfo,
             @PathVariable Long exerciseId,
             @PathVariable Long participationId
     ) {
-        return new DetailExerciseUserResponse(
+        return new DetailExerciseParticipationResponse(
                 exercisePartiipationService.getDetailExerciseUser(authInfo.getId(), participationId),
                 exerciseCommentService.getComments(participationId)
         );
@@ -43,11 +43,11 @@ public class ExerciseParticipationController {
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("운동 별 사용자 참여리스트 가져오기")
-    public SimpleExerciseUserListResponse getSimpleExerciseUserList(
+    public SimpleExerciseParticipationListResponse getSimpleExerciseUserList(
             @PathVariable Long exerciseId,
             @RequestParam OrderType order
     ) {
-        return new SimpleExerciseUserListResponse(
+        return new SimpleExerciseParticipationListResponse(
                 exercisePartiipationService.getExerciseUserList(exerciseId, order)
         );
     }
