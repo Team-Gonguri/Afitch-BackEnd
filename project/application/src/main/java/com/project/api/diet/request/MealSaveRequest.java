@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.util.List;
 
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @ApiModel("식사 저장 요청")
 public class MealSaveRequest {

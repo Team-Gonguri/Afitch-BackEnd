@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @ApiModel("회원가입 요청")
 public class SignUpRequest {
