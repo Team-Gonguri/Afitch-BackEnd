@@ -15,10 +15,10 @@ public class DetailExerciseParticipationResponse {
     private Long id;
     @ApiModelProperty("사용자 닉네임")
     private String nickName;
+    @ApiModelProperty("사용자 운동영상 URL")
+    private String url;
     @ApiModelProperty("운동 이름")
     private String exerciseName;
-    @ApiModelProperty("사용자 운동 영상 URL")
-    private String url;
     @ApiModelProperty("점수")
     private int score;
     @ApiModelProperty("댓글 갯수")
@@ -29,8 +29,8 @@ public class DetailExerciseParticipationResponse {
     public DetailExerciseParticipationResponse(DetailExerciseParticipationDto exerciseParticipation, List<ExerciseCommentDto> comments) {
         this.id = exerciseParticipation.getId();
         this.nickName = exerciseParticipation.getNickName();
-        this.url = exerciseParticipation.getUserURL();
         this.exerciseName = exerciseParticipation.getExerciseName();
+        this.url = exerciseParticipation.getUserURL();
         this.score = exerciseParticipation.getScore();
         this.comments = comments;
         this.commentNum = comments.size();
