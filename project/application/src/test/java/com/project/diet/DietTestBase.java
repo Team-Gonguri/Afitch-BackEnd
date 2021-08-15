@@ -1,5 +1,6 @@
 package com.project.diet;
 
+import com.project.diet.model.dto.FoodDto;
 import com.project.utils.DateUtils;
 import com.project.common.CommonTestBase;
 import com.project.diet.model.dto.FoodWrapperDto;
@@ -26,7 +27,7 @@ public class DietTestBase extends CommonTestBase {
     }
 
     protected List<FoodWrapperDto> getFoodWrapperDtoList() {
-        return getFoods().stream().map(it -> new FoodWrapperDto(1, it)).collect(Collectors.toList());
+        return getFoods().stream().map(it -> new FoodWrapperDto(1, new FoodDto(it))).collect(Collectors.toList());
 
     }
 

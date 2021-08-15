@@ -42,7 +42,7 @@ public class DietFactory {
 
     public Food getFood() {
         return new Food(
-                null,
+                1L,
                 "testFood",
                 "testCategory",
                 200,
