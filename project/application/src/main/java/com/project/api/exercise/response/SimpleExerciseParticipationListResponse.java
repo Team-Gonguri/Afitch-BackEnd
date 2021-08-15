@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @ApiModel("간단한 운동별 참여한 사용자 정보")
-public class SimpleExerciseUserListResponse {
+public class SimpleExerciseParticipationListResponse {
    @ApiModelProperty("정렬기준에 따라서 정렬된 사용자 정보")
     private List<SimpleExerciseParticipationDto> lists;
 }
