@@ -39,7 +39,7 @@ public class MealDetailResponse {
         Ingredient ingredient = new Ingredient();
         foodWrappers.forEach(
                 wrappers -> {
-                    Ingredient it = wrappers.getFood().getIngredient();
+                    Ingredient it = wrappers.getFood().parsingIngredient();
                     ingredient.setCarbohydrate(ingredient.getCarbohydrate() + it.getCarbohydrate() * wrappers.getSize());
                     ingredient.setFat(ingredient.getFat() + it.getFat() * wrappers.getSize());
                     ingredient.setProtein(ingredient.getProtein() + it.getProtein() * wrappers.getSize());
