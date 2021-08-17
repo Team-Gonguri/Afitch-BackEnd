@@ -1,9 +1,10 @@
 package com.project.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.auth.model.repository.UserRepository;
 import com.project.auth.service.AuthService;
 import com.project.security.JwtProvider;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.security.JwtTokenDto;
 import com.project.security.enums.TokenType;
 import com.project.security.enums.UserRole;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,14 +37,14 @@ public class CommonTestBase {
     @Autowired
     protected AuthService authService;
 
-    protected String validAccessToken1 = null;
-    protected String validAccessToken2 = null;
-    protected String notExistAccessToken = null;
-    protected String inValidAccessToken = null;
-    protected String validRefreshToken = null;
-    protected String inValidRefreshToken = null;
-    protected String expiredAccessToken = null;
-    protected String expiredRefreshToken = null;
+    protected JwtTokenDto validAccessToken1 = null;
+    protected JwtTokenDto validAccessToken2 = null;
+    protected JwtTokenDto notExistAccessToken = null;
+    protected JwtTokenDto inValidAccessToken = null;
+    protected JwtTokenDto validRefreshToken = null;
+    protected JwtTokenDto inValidRefreshToken = null;
+    protected JwtTokenDto expiredAccessToken = null;
+    protected JwtTokenDto expiredRefreshToken = null;
 
     @Order(2)
     @BeforeEach
@@ -53,10 +54,10 @@ public class CommonTestBase {
         validRefreshToken = jwtProvider.getToken(9999L, UserRole.ROLE_USER, TokenType.REFRESH);
         notExistAccessToken = jwtProvider.getToken(100000L, UserRole.ROLE_USER, TokenType.ACCESS);
 
-        expiredAccessToken = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTYyNTcyNDk2OSwiZXhwIjoxNjI1NzI0OTcwfQ.Fv-fptrtlYmVPl7bm6m-3w1MW8cT84d9RrS_UcPM2aA";
-        expiredRefreshToken = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTYyNTcyNTEwNCwiZXhwIjoxNjI1NzI1MTA2fQ.IXoYXZlFK6SvxfqeVBUQfCu3IJdafAbKBi9_7RpsH94";
-        inValidAccessToken = "InvalidAccess";
-        inValidRefreshToken = "InvalidRefresh";
+        expiredAccessToken = new JwtTokenDto("eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTYyNTcyNDk2OSwiZXhwIjoxNjI1NzI0OTcwfQ.Fv-fptrtlYmVPl7bm6m-3w1MW8cT84d9RrS_UcPM2aA", null);
+        expiredRefreshToken = new JwtTokenDto("eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTYyNTcyNTEwNCwiZXhwIjoxNjI1NzI1MTA2fQ.IXoYXZlFK6SvxfqeVBUQfCu3IJdafAbKBi9_7RpsH94", null);
+        inValidAccessToken = new JwtTokenDto("InvalidAccess", null);
+        inValidRefreshToken = new JwtTokenDto("InvalidRefresh", null);
     }
 
 }

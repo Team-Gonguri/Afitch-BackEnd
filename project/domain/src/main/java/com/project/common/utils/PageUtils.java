@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort;
 
 public class PageUtils {
 
-    private static int size = 5;
+    private static int size = 10;
 
     public static Pageable normalPaging(int page, Sort.Direction direction) {
         return PageRequest.of(page, size, direction, "id");

@@ -21,8 +21,8 @@ public class SignUpTest extends AuthTestBase {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(signUpRequest)))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("accessToken").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("refreshToken").isString());
+                .andExpect(MockMvcResultMatchers.jsonPath("access.token").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("refresh.token").isString());
     }
 
     @Test

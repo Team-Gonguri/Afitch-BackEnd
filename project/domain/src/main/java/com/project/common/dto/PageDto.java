@@ -11,9 +11,15 @@ public class PageDto<T> {
     private int totalPages;
     private List<T> contents;
 
-    public PageDto(Page<T> pages){
+    public PageDto(Page<T> pages) {
         this.currentPage = pages.getNumber();
         this.totalPages = pages.getTotalPages();
         this.contents = pages.getContent();
+    }
+
+    public PageDto(List<T> contents, int currentPage, int totalPages) {
+        this.currentPage = currentPage;
+        this.totalPages = totalPages;
+        this.contents = contents;
     }
 }
