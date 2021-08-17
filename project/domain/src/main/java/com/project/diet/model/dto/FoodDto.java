@@ -40,7 +40,7 @@ public class FoodDto {
         this.calories = food.getIngredients().getCalories();
     }
 
-    public Ingredient getIngredient() {
+    public Ingredient parsingIngredient() {
         return new Ingredient(this.protein, this.fat, this.carbohydrate, this.calories);
     }
 }

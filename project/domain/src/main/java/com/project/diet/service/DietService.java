@@ -86,7 +86,7 @@ public class DietService {
     private Ingredient calMealIngredients(List<FoodWrapperDto> dto) {
         Ingredient ingredient = new Ingredient();
         dto.forEach(wrapper -> {
-            Ingredient foodIngredient = wrapper.getFood().getIngredient();
+            Ingredient foodIngredient = wrapper.getFood().parsingIngredient();
             ingredient.setCarbohydrate(ingredient.getCarbohydrate() + foodIngredient.getCarbohydrate() * wrapper.getSize());
             ingredient.setFat(ingredient.getFat() + foodIngredient.getFat() * wrapper.getSize());
             ingredient.setProtein(ingredient.getProtein() + foodIngredient.getFat() * wrapper.getSize());
