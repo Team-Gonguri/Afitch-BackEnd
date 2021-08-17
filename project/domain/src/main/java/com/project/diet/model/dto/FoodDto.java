@@ -26,7 +26,7 @@ public class FoodDto {
     private double carbohydrate;
 
 
-    private double calories = 0;
+    private double calories;
 
     public FoodDto(Food food) {
         this.id = food.getId();
@@ -37,6 +37,7 @@ public class FoodDto {
         this.protein = food.getIngredients().getProtein();
         this.fat = food.getIngredients().getFat();
         this.carbohydrate = food.getIngredients().getCarbohydrate();
+        this.calories = food.getIngredients().getCalories();
     }
 
     public Ingredient getIngredient() {
