@@ -29,9 +29,9 @@ public class FoodService {
     }
 
     @Transactional(readOnly = true)
-    public PageDto findFoods(String keyword, int page) {
+    public PageDto<FoodDto> findFoods(String keyword, int page) {
         Page<Food> food = foodRepository.findFoodByNameContaining(keyword, PageUtils.normalPaging(page, Sort.Direction.DESC));
-        return new PageDto(food.getContent().stream().map(FoodDto::new).collect(Collectors.toList()), food.getNumber(),food.getTotalPages());
+        return new PageDto(food.getContent().stream().map(FoodDto::new).collect(Collectors.toList()), food.getNumber(), food.getTotalPages());
     }
 
 }

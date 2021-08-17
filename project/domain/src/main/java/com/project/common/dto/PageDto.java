@@ -1,11 +1,13 @@
 package com.project.common.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class PageDto<T> {
     private int currentPage;
     private int totalPages;
