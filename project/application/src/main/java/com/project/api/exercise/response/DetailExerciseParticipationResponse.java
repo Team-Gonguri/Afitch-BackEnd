@@ -20,7 +20,7 @@ public class DetailExerciseParticipationResponse {
     @ApiModelProperty("운동 이름")
     private String exerciseName;
     @ApiModelProperty("점수")
-    private int score;
+    private double score;
     @ApiModelProperty("댓글 갯수")
     private int commentNum;
     @ApiModelProperty("댓글들")

@@ -95,7 +95,7 @@ public class ExerciseParticipationService {
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
         String url = s3Manager.uploadFile(video);
         ExerciseParticipation exerciseParticipation = exerciseParticipationRepository.findByExerciseAndUserAndCreatedAt(exercise, user, DateUtils.now()).orElseGet(() -> exerciseParticipationRepository.save(new ExerciseParticipation(url, PublicScope.valueOf(open), exercise, user)));
-        connectorUtils.send(HttpMethod.POST, visionServerURL, new VisionBodyDto(visionService.getPoseData(exercise.getUrl())), VisionBodyDto.class, Double.class)
+        connectorUtils.send(HttpMethod.POST, visionServerURL+"/similarity?url="+url, new VisionBodyDto(visionService.getPoseData(exercise.getUrl())), VisionBodyDto.class, Double.class)
                 .subscribe(score -> update(score, url, exerciseParticipation));
 
         return new DetailExerciseParticipationDto(exerciseParticipation, url);
@@ -107,6 +107,7 @@ public class ExerciseParticipationService {
             s3Manager.deleteFile(exerciseParticipation.getUrl());
             exerciseParticipation.updateUrl(url);
             exerciseParticipation.updateScore(score);
+            exerciseParticipationRepository.save(exerciseParticipation);
         }else
             s3Manager.deleteFile(url);
     }

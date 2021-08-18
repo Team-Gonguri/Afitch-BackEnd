@@ -1,27 +1,26 @@
 package com.project.exercise.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.exercise.model.dto.vision.PoseDataDto;
-import com.project.exercise.model.dto.vision.VisionBodyDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class VisionService {
 
-    private final RedisTemplate<String, PoseDataDto[]> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
+    private final ObjectMapper objectMapper;
 
-    public void save(String url, VisionBodyDto dto) {
-        ListOperations<String, PoseDataDto[]> listOperations = redisTemplate.opsForList();
-        listOperations.rightPushAll(url, dto.getData());
+    public void save(String url, PoseDataDto[] data) throws JsonProcessingException {
+        String dataToString = objectMapper.writeValueAsString(data);
+        redisTemplate.opsForValue().set(url, dataToString);
     }
 
-    public PoseDataDto[] getPoseData(String url) {
-        ListOperations<String, PoseDataDto[]> listOperations = redisTemplate.opsForList();
-        return listOperations.range(url, 0, -1).stream().toArray(PoseDataDto[]::new);
+    public PoseDataDto[] getPoseData(String url) throws JsonProcessingException {
+        String stringData = redisTemplate.opsForValue().get(url);
+        return objectMapper.readValue(stringData, PoseDataDto[].class);
     }
 }

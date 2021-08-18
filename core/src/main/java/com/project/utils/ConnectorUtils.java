@@ -33,4 +33,19 @@ public class ConnectorUtils {
                                 })
                 )).bodyToMono(responseType);
     }
+    public <req, res> Mono<res> send(
+            HttpMethod httpMethod,
+            String baseUrl,
+            Class<res> responseType
+    ) {
+        return webClient.mutate().baseUrl(baseUrl).build()
+                .method(httpMethod)
+                .retrieve()
+                .onStatus(HttpStatus::isError, (responseError ->
+                        responseError.bodyToMono(ErrorResponse.class)
+                                .map(parsingError -> {
+                                    throw new UnExpectedError(parsingError);
+                                })
+                )).bodyToMono(responseType);
+    }
 }
