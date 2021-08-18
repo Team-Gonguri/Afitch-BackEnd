@@ -11,7 +11,7 @@ public class DetailExerciseParticipationDto {
     private Long id;
     private String nickName;
     private String exerciseName;
-    private int score;
+    private double score;
     private String userURL;
     private String expertURL;
     private String createdAt;

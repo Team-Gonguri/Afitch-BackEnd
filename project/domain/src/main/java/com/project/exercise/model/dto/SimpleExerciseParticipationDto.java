@@ -9,7 +9,7 @@ public class SimpleExerciseParticipationDto {
     private Long id;
     private String exerciseName;
     private String userName;
-    private int score;
+    private double score;
     private PublicScope scope;
 
     public SimpleExerciseParticipationDto(ExerciseParticipation exerciseParticipation) {

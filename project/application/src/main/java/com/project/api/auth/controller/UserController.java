@@ -5,7 +5,7 @@ import com.project.api.auth.response.DetailUserInfoResponse;
 import com.project.api.auth.response.SimpleUserInfoResponse;
 import com.project.auth.model.dto.UserInfoDto;
 import com.project.auth.service.UserService;
-import com.project.exercise.service.ExercisePartiipationService;
+import com.project.exercise.service.ExerciseParticipationService;
 import com.project.security.AuthInfo;
 import com.project.security.Authenticated;
 import io.swagger.annotations.ApiOperation;
@@ -21,14 +21,14 @@ import java.text.ParseException;
 public class UserController {
 
     private final UserService userService;
-    private final ExercisePartiipationService exercisePartiipationService;
+    private final ExerciseParticipationService exerciseParticipationService;
 
     @GetMapping
     @ApiOperation("내 정보 가져오기")
     public DetailUserInfoResponse getMyInfo(@Authenticated AuthInfo authInfo) throws ParseException {
         return new DetailUserInfoResponse(
                 userService.getMyInfo(authInfo.getId()),
-                exercisePartiipationService.getTodayTop4Participation(authInfo.getId())
+                exerciseParticipationService.getTodayTop4Participation(authInfo.getId())
         );
     }
 

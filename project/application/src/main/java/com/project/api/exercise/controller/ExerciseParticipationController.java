@@ -5,7 +5,7 @@ import com.project.api.exercise.response.SaveExerciseResponse;
 import com.project.api.exercise.response.SimpleExerciseParticipationListResponse;
 import com.project.exercise.model.entity.enums.OrderType;
 import com.project.exercise.service.ExerciseCommentService;
-import com.project.exercise.service.ExercisePartiipationService;
+import com.project.exercise.service.ExerciseParticipationService;
 import com.project.security.AuthInfo;
 import com.project.security.Authenticated;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +22,7 @@ import java.io.IOException;
 @RequestMapping("/exercises/{exerciseId}/participation")
 public class ExerciseParticipationController {
 
-    private final ExercisePartiipationService exercisePartiipationService;
+    private final ExerciseParticipationService exerciseParticipationService;
     private final ExerciseCommentService exerciseCommentService;
 
     @GetMapping("/{participationId}")
@@ -34,7 +34,7 @@ public class ExerciseParticipationController {
             @PathVariable Long participationId
     ) {
         return new DetailExerciseParticipationResponse(
-                exercisePartiipationService.getDetailExerciseUser(authInfo.getId(), participationId),
+                exerciseParticipationService.getDetailExerciseUser(authInfo.getId(), participationId),
                 exerciseCommentService.getComments(participationId)
         );
     }
@@ -48,7 +48,7 @@ public class ExerciseParticipationController {
             @RequestParam OrderType order
     ) {
         return new SimpleExerciseParticipationListResponse(
-                exercisePartiipationService.getExerciseUserList(exerciseId, order)
+                exerciseParticipationService.getExerciseUserList(exerciseId, order)
         );
     }
 
@@ -62,7 +62,7 @@ public class ExerciseParticipationController {
             @RequestParam String open
     ) throws IOException {
         return new SaveExerciseResponse(
-                exercisePartiipationService.saveExerciseUserVideo(authInfo.getId(), exerciseId, video, open)
+                exerciseParticipationService.saveExerciseUserVideo(authInfo.getId(), exerciseId, video, open)
         );
     }
 
@@ -74,6 +74,6 @@ public class ExerciseParticipationController {
             @PathVariable Long exerciseId,
             @PathVariable Long exerciseUserId) {
 
-        exercisePartiipationService.deleteExerciseUserVideo(authInfo.getId(), exerciseUserId);
+        exerciseParticipationService.deleteExerciseUserVideo(authInfo.getId(), exerciseUserId);
     }
 }
