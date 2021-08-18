@@ -1,9 +1,9 @@
 package com.project.diet.service;
 
-import com.project.utils.DateUtils;
 import com.project.auth.exceptions.UserNotExistsException;
 import com.project.auth.model.entity.User;
 import com.project.auth.model.repository.UserRepository;
+import com.project.diet.exceptions.FoodNotExistException;
 import com.project.diet.exceptions.MealNotExistsException;
 import com.project.diet.model.dto.FoodWrapperDto;
 import com.project.diet.model.dto.MealDto;
@@ -12,9 +12,11 @@ import com.project.diet.model.entity.FoodWrapper;
 import com.project.diet.model.entity.Ingredient;
 import com.project.diet.model.entity.Meal;
 import com.project.diet.model.entity.enums.MealType;
+import com.project.diet.model.repository.FoodRepository;
 import com.project.diet.model.repository.FoodWrapperRepository;
 import com.project.diet.model.repository.MealRepository;
 import com.project.exception.NotYourContentsException;
+import com.project.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class DietService {
+    private final FoodRepository foodRepository;
     private final FoodWrapperRepository foodWrapperRepository;
     private final MealRepository mealRepository;
     private final UserRepository userRepository;
@@ -68,10 +71,11 @@ public class DietService {
         return new MealDto(meal, dto);
     }
 
-    private void saveFoodWrappers(Meal meal, List<FoodWrapperDto> dto) {
+    @Transactional
+    void saveFoodWrappers(Meal meal, List<FoodWrapperDto> dto) {
         List<FoodWrapper> foods = dto.stream().map(
                 wrapper -> new FoodWrapper(
-                        wrapper.getFood(),
+                        foodRepository.findById(wrapper.getFood().getId()).orElseThrow(FoodNotExistException::new),
                         meal,
                         wrapper.getSize()
                 )
@@ -82,7 +86,7 @@ public class DietService {
     private Ingredient calMealIngredients(List<FoodWrapperDto> dto) {
         Ingredient ingredient = new Ingredient();
         dto.forEach(wrapper -> {
-            Ingredient foodIngredient = wrapper.getFood().getIngredients();
+            Ingredient foodIngredient = wrapper.getFood().parsingIngredient();
             ingredient.setCarbohydrate(ingredient.getCarbohydrate() + foodIngredient.getCarbohydrate() * wrapper.getSize());
             ingredient.setFat(ingredient.getFat() + foodIngredient.getFat() * wrapper.getSize());
             ingredient.setProtein(ingredient.getProtein() + foodIngredient.getFat() * wrapper.getSize());

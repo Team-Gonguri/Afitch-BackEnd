@@ -1,6 +1,7 @@
 package com.project.api.diet.response;
 
 import com.project.common.dto.PageDto;
+import com.project.diet.model.dto.FoodDto;
 import com.project.diet.model.entity.Food;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,9 +18,9 @@ public class FoodSearchResponse {
     @ApiModelProperty("전체 페이지")
     private int totalPages;
     @ApiModelProperty("음식들 (p당 5개)")
-    private List<Food> foods;
+    private List<FoodDto> foods;
 
-    public FoodSearchResponse(PageDto<Food> dto) {
+    public FoodSearchResponse(PageDto<FoodDto> dto) {
         this.currentPages = dto.getCurrentPage();
         this.totalPages = dto.getTotalPages();
         this.foods = dto.getContents();

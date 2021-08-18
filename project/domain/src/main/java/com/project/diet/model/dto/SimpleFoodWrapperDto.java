@@ -13,7 +13,7 @@ public class SimpleFoodWrapperDto {
 
     public SimpleFoodWrapperDto(FoodWrapper foodWrapper) {
         this.size = foodWrapper.getSize();
-        this.food = new SimpleFoodDto(foodWrapper.getFood());
+        this.food = new SimpleFoodDto(new FoodDto(foodWrapper.getFood()));
     }
 
     public SimpleFoodWrapperDto(FoodWrapperDto foodWrapperDto) {

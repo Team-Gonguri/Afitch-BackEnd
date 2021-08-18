@@ -17,7 +17,7 @@ import java.util.List;
 public class MealDetailResponse {
     @ApiModelProperty("식사 식별자")
     private Long id;
-    @ApiModelProperty("식사 타입 (BREAKFAST | LUNCH | DINNER)")
+    @ApiModelProperty("식사 타입 (BREAKFAST | LUNCH | DINNER | SNACK)")
     private MealType type;
     @ApiModelProperty("저장되어있는 음식들")
     private List<FoodWrapperDto> foods;
@@ -39,7 +39,7 @@ public class MealDetailResponse {
         Ingredient ingredient = new Ingredient();
         foodWrappers.forEach(
                 wrappers -> {
-                    Ingredient it = wrappers.getFood().getIngredients();
+                    Ingredient it = wrappers.getFood().parsingIngredient();
                     ingredient.setCarbohydrate(ingredient.getCarbohydrate() + it.getCarbohydrate() * wrappers.getSize());
                     ingredient.setFat(ingredient.getFat() + it.getFat() * wrappers.getSize());
                     ingredient.setProtein(ingredient.getProtein() + it.getProtein() * wrappers.getSize());
