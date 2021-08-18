@@ -29,7 +29,7 @@ public class ExerciseParticipation {
     private PublicScope scope;
 
     @Column(nullable = false)
-    private int score = -1;
+    private double score = -1;
 
     @ManyToOne
     private Exercise exercise;
@@ -39,7 +39,7 @@ public class ExerciseParticipation {
 
     private Date createdAt;
 
-    public void updateScore(int score) {
+    public void updateScore(double score) {
         this.score = score;
     }
 

@@ -10,8 +10,8 @@ import com.project.exercise.exceptions.ExerciseNotExistsException;
 import com.project.exercise.exceptions.ExerciseUserNotExistsException;
 import com.project.exercise.model.dto.DetailExerciseParticipationDto;
 import com.project.exercise.model.dto.SimpleExerciseParticipationDto;
-import com.project.exercise.model.dto.UrlDto;
-import com.project.exercise.model.dto.VectorDto;
+import com.project.exercise.model.dto.vision.VectorDto;
+import com.project.exercise.model.dto.vision.VisionBodyDto;
 import com.project.exercise.model.entity.Exercise;
 import com.project.exercise.model.entity.ExerciseComment;
 import com.project.exercise.model.entity.ExerciseParticipation;
@@ -95,9 +95,19 @@ public class ExerciseParticipationService {
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
         String url = s3Manager.uploadFile(video);
         ExerciseParticipation exerciseParticipation = exerciseParticipationRepository.findByExerciseAndUserAndCreatedAt(exercise, user, DateUtils.now()).orElseGet(() -> exerciseParticipationRepository.save(new ExerciseParticipation(url, PublicScope.valueOf(open), exercise, user)));
-        connectorUtils.send(HttpMethod.POST, visionServerURL, new UrlDto(url), UrlDto.class,VectorDto[].class)
-                .subscribe(vectors -> visionService.calculate(vectors, url, exerciseParticipation));
+        connectorUtils.send(HttpMethod.POST, visionServerURL, new VisionBodyDto(visionService.getPoseData(exercise.getUrl())), VisionBodyDto.class, Double.class)
+                .subscribe(score -> update(score, url, exerciseParticipation));
 
         return new DetailExerciseParticipationDto(exerciseParticipation, url);
+    }
+
+    @Transactional
+    public void update(double score, String url, ExerciseParticipation exerciseParticipation) {
+        if (score >= exerciseParticipation.getScore()){
+            s3Manager.deleteFile(exerciseParticipation.getUrl());
+            exerciseParticipation.updateUrl(url);
+            exerciseParticipation.updateScore(score);
+        }else
+            s3Manager.deleteFile(url);
     }
 }
