@@ -25,4 +25,10 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleConnectionError(Exception e) {
         return new ErrorResponse(GlobalExceptionType.UNEXPECTED_SERVER_ERROR.getMessage(), GlobalExceptionType.UNEXPECTED_SERVER_ERROR.getCode());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidFileTypeException.class)
+    public ErrorResponse handleInvalidFileTypeException() {
+        return new ErrorResponse(GlobalExceptionType.INVALID_FILE_TYPE.getMessage(), GlobalExceptionType.INVALID_FILE_TYPE.getCode());
+    }
 }

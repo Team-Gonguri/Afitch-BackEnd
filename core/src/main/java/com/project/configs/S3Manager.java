@@ -9,8 +9,11 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.util.IOUtils;
+import com.project.exception.InvalidFileTypeException;
+import com.project.exception.NotYourContentsException;
 import com.project.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,12 +56,22 @@ public class S3Manager {
     public String uploadFile(MultipartFile file) throws IOException {
         String createdAt = DateUtils.parseDateToSimpleString(new Date());
         String fileName = String.format("%s-%s.mp4", createdAt, UUID.randomUUID().toString());
+        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
         byte[] bytes = IOUtils.toByteArray(file.getInputStream());
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-
         ObjectMetadata metadata = new ObjectMetadata();
+        String contentType;
+
+        System.out.println("file = "+ext);
+        if(ext.equals("mp4"))
+            contentType = "video/mp4";
+        else if(ext.equals("webm"))
+            contentType = "video/webm";
+        else
+            throw new InvalidFileTypeException();
+
         metadata.setContentLength(bytes.length);
-        metadata.setContentType("video/mp4");
+        metadata.setContentType(contentType);
         s3Client.putObject(new PutObjectRequest(bucketName, fileName, byteArrayInputStream, metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
