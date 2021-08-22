@@ -4,6 +4,7 @@ import com.project.auth.model.entity.User;
 import com.project.diet.model.entity.Food;
 import com.project.diet.model.entity.Ingredient;
 import com.project.diet.model.entity.Meal;
+import com.project.diet.model.entity.enums.FoodType;
 import com.project.diet.model.entity.enums.MealType;
 
 import java.util.Date;
@@ -44,9 +45,10 @@ public class DietFactory {
         return new Food(
                 1L,
                 "testFood",
-                "testCategory",
                 200,
                 "g",
+                FoodType.ALL
+                ,
                 new Ingredient()
         );
     }
