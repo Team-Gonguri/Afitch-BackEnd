@@ -4,6 +4,7 @@ import com.project.common.dto.PageDto;
 import com.project.common.utils.PageUtils;
 import com.project.diet.model.dto.FoodDto;
 import com.project.diet.model.entity.Food;
+import com.project.diet.model.entity.enums.FoodType;
 import com.project.diet.model.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,7 +31,7 @@ public class FoodService {
 
     @Transactional(readOnly = true)
     public PageDto<FoodDto> findFoods(String keyword, int page) {
-        Page<Food> food = foodRepository.findFoodByNameContaining(keyword, PageUtils.normalPaging(page, Sort.Direction.DESC));
+        Page<Food> food = foodRepository.findFoodByNameContainingAndFoodType(keyword, PageUtils.normalPaging(page, Sort.Direction.DESC), FoodType.ALL);
         return new PageDto(food.getContent().stream().map(FoodDto::new).collect(Collectors.toList()), food.getNumber(), food.getTotalPages());
     }
 

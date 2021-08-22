@@ -1,5 +1,6 @@
 package com.project.diet.model.entity;
 
+import com.project.diet.model.entity.enums.FoodType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,9 @@ public class Food {
      */
     @Column(length = 2)
     private String unit;
+
+    @Enumerated(EnumType.STRING)
+    FoodType foodType;
 
     @Embedded
     private Ingredient ingredients;

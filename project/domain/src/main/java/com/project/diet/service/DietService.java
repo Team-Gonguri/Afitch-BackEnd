@@ -3,14 +3,15 @@ package com.project.diet.service;
 import com.project.auth.exceptions.UserNotExistsException;
 import com.project.auth.model.entity.User;
 import com.project.auth.model.repository.UserRepository;
-import com.project.diet.exceptions.FoodNotExistException;
 import com.project.diet.exceptions.MealNotExistsException;
 import com.project.diet.model.dto.FoodWrapperDto;
 import com.project.diet.model.dto.MealDto;
 import com.project.diet.model.dto.SimpleMealDto;
+import com.project.diet.model.entity.Food;
 import com.project.diet.model.entity.FoodWrapper;
 import com.project.diet.model.entity.Ingredient;
 import com.project.diet.model.entity.Meal;
+import com.project.diet.model.entity.enums.FoodType;
 import com.project.diet.model.entity.enums.MealType;
 import com.project.diet.model.repository.FoodRepository;
 import com.project.diet.model.repository.FoodWrapperRepository;
@@ -64,8 +65,13 @@ public class DietService {
         Ingredient totalIngredients = calMealIngredients(dto);
         if (meal == null)
             meal = mealRepository.save(new Meal(null, type, user, DateUtils.parseStringToDate(date), totalIngredients));
-        else
-            foodWrapperRepository.deleteAllByMeal(meal);
+        else {
+            List<FoodWrapper> foodWrappers = foodWrapperRepository.findAllByMeal(meal);
+            List<Food> personalFood = foodWrappers.stream().map(FoodWrapper::getFood)
+                    .filter(food -> food.getFoodType().equals(FoodType.PERSONAL)).collect(Collectors.toList());
+            foodWrapperRepository.deleteAll(foodWrappers);
+            foodRepository.deleteAll(personalFood);
+        }
 
         saveFoodWrappers(meal, dto);
         return new MealDto(meal, dto);
@@ -75,7 +81,20 @@ public class DietService {
     void saveFoodWrappers(Meal meal, List<FoodWrapperDto> dto) {
         List<FoodWrapper> foods = dto.stream().map(
                 wrapper -> new FoodWrapper(
-                        foodRepository.findById(wrapper.getFood().getId()).orElseThrow(FoodNotExistException::new),
+                        foodRepository.findById(wrapper.getFood().getId()).orElse(
+                                foodRepository.save(
+                                        new Food(
+                                                null,
+                                                wrapper.getFood().getName(),
+                                                wrapper.getFood().getFoodCategory(),
+                                                wrapper.getFood().getSize(),
+                                                wrapper.getFood().getUnit(),
+                                                FoodType.PERSONAL,
+                                                wrapper.getFood().parsingIngredient()
+
+                                        )
+                                )
+                        ),
                         meal,
                         wrapper.getSize()
                 )

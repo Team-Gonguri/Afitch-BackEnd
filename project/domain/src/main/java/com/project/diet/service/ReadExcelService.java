@@ -3,6 +3,7 @@ package com.project.diet.service;
 import com.monitorjbl.xlsx.StreamingReader;
 import com.project.diet.model.entity.Food;
 import com.project.diet.model.entity.Ingredient;
+import com.project.diet.model.entity.enums.FoodType;
 import com.project.diet.model.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
@@ -57,6 +58,7 @@ public class ReadExcelService {
                     foodCategory,
                     size,
                     unit,
+                    FoodType.ALL,
                     ingredient
             ));
         }
