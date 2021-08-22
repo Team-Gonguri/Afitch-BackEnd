@@ -12,6 +12,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
+    implementation ("commons-io:commons-io:2.5")
     implementation ("io.jsonwebtoken:jjwt:0.9.1")
     implementation ("net.minidev:json-smart:2.3")
     implementation ("com.amazonaws:aws-java-sdk:1.11.106")

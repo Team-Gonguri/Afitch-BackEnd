@@ -12,6 +12,7 @@ jar{
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("com.monitorjbl:xlsx-streamer:2.1.0")
     implementation("commons-io:commons-io:2.5")
     implementation("org.apache.poi:poi-ooxml:4.1.2")
