@@ -3,6 +3,7 @@ package com.project.diet.service;
 import com.project.auth.exceptions.UserNotExistsException;
 import com.project.auth.model.entity.User;
 import com.project.auth.model.repository.UserRepository;
+import com.project.diet.exceptions.FoodNotExistException;
 import com.project.diet.exceptions.MealNotExistsException;
 import com.project.diet.model.dto.FoodWrapperDto;
 import com.project.diet.model.dto.MealDto;
@@ -74,30 +75,35 @@ public class DietService {
         }
 
         saveFoodWrappers(meal, dto);
-        return new MealDto(meal, dto);
+        return new MealDto(meal, foodWrapperRepository.findAllByMeal(meal).stream().map(FoodWrapperDto::new).collect(Collectors.toList()));
     }
 
     @Transactional
     void saveFoodWrappers(Meal meal, List<FoodWrapperDto> dto) {
         List<FoodWrapper> foods = dto.stream().map(
-                wrapper -> new FoodWrapper(
-                        foodRepository.findById(wrapper.getFood().getId()).orElse(
-                                foodRepository.save(
-                                        new Food(
-                                                null,
-                                                wrapper.getFood().getName(),
-                                                wrapper.getFood().getSize(),
-                                                wrapper.getFood().getUnit(),
-                                                FoodType.PERSONAL,
-                                                wrapper.getFood().parsingIngredient()
+                wrapper -> {
+                    Food food;
 
-                                        )
+                    if (wrapper.getFood().getId() == null) {
+                        food = foodRepository.save(
+                                new Food(
+                                        null,
+                                        wrapper.getFood().getName(),
+                                        wrapper.getFood().getSize(),
+                                        wrapper.getFood().getUnit(),
+                                        FoodType.PERSONAL,
+                                        wrapper.getFood().parsingIngredient()
                                 )
-                        ),
-                        meal,
-                        wrapper.getSize()
-                )
-        ).collect(Collectors.toList());
+                        );
+                    } else
+                        food = foodRepository.findById(wrapper.getFood().getId()).orElseThrow(FoodNotExistException::new);
+
+                    return new FoodWrapper(
+                            food,
+                            meal,
+                            wrapper.getSize()
+                    );
+                }).collect(Collectors.toList());
         foodWrapperRepository.saveAll(foods);
     }
 

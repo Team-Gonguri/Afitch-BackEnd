@@ -13,8 +13,6 @@ public class FoodDto {
 
     private String name;
 
-    private String foodCategory;
-
     private int size;
 
     private String unit;
@@ -33,7 +31,6 @@ public class FoodDto {
         this.name = food.getName();
         this.unit = food.getUnit();
         this.size = food.getSize();
-        this.foodCategory = food.getFoodCategory();
         this.protein = food.getIngredients().getProtein();
         this.fat = food.getIngredients().getFat();
         this.carbohydrate = food.getIngredients().getCarbohydrate();
