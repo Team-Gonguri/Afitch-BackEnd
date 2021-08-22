@@ -34,19 +34,17 @@ public class ReadExcelService {
 
             String name = row.getCell(1).getStringCellValue();
 
-            String foodCategory = row.getCell(2).getStringCellValue();
+            int size = (int) getNumericCell(row, 2);
 
-            int size = (int) getNumericCell(row, 3);
+            String unit = row.getCell(3).getStringCellValue();
 
-            String unit = row.getCell(4).getStringCellValue();
+            double protein = getNumericCell(row, 4);
 
-            double protein = getNumericCell(row, 5);
+            double fat = getNumericCell(row, 5);
 
-            double fat = getNumericCell(row, 6);
+            double carbohydrate = getNumericCell(row, 6);
 
-            double carbohydrate = getNumericCell(row, 7);
-
-            double calories = getNumericCell(row, 8);
+            double calories = getNumericCell(row, 7);
 
             Ingredient ingredient = new Ingredient(protein,
                     fat,
@@ -55,7 +53,6 @@ public class ReadExcelService {
             foodRepository.save(new Food(
                     id,
                     name,
-                    foodCategory,
                     size,
                     unit,
                     FoodType.ALL,

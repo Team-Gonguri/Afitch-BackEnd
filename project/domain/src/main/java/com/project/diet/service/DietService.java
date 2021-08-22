@@ -86,7 +86,6 @@ public class DietService {
                                         new Food(
                                                 null,
                                                 wrapper.getFood().getName(),
-                                                wrapper.getFood().getFoodCategory(),
                                                 wrapper.getFood().getSize(),
                                                 wrapper.getFood().getUnit(),
                                                 FoodType.PERSONAL,

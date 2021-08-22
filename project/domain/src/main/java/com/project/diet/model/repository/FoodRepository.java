@@ -10,9 +10,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface FoodRepository extends JpaRepository<Food, Long> {
-
-    @Query("SELECT DISTINCT p.foodCategory from Food p")
-    List<String> findAllDistinctFoodCategories();
-
     Page<Food> findFoodByNameContainingAndFoodType(String keyword, Pageable pageable, FoodType type);
 }

@@ -23,11 +23,6 @@ public class FoodService {
 
     private final FoodRepository foodRepository;
 
-    @Cacheable(cacheNames = "food_categories")
-    @Transactional(readOnly = true)
-    public List<String> getFoodCategories() {
-        return foodRepository.findAllDistinctFoodCategories();
-    }
 
     @Transactional(readOnly = true)
     public PageDto<FoodDto> findFoods(String keyword, int page) {
