@@ -23,6 +23,7 @@ import com.project.exercise.model.repository.ExerciseRepository;
 import com.project.utils.ConnectorUtils;
 import com.project.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,14 @@ public class ExerciseParticipationService {
             throw new NotYourContentsException();
 
         return new DetailExerciseParticipationDto(exerciseParticipation);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SimpleExerciseParticipationDto> getUserParticipation(Long userId,String date) throws ParseException {
+        User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
+        return exerciseParticipationRepository.findByUserAndCreatedAt(user, DateUtils.parseStringToDate(date))
+                .stream().map(SimpleExerciseParticipationDto::new).collect(Collectors.toList());
+
     }
 
     @Transactional(readOnly = true)

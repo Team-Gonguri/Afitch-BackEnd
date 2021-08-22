@@ -3,6 +3,7 @@ package com.project.api.auth.controller;
 import com.project.api.auth.request.UpdateUserInfoRequest;
 import com.project.api.auth.response.DetailUserInfoResponse;
 import com.project.api.auth.response.SimpleUserInfoResponse;
+import com.project.api.exercise.response.SimpleExerciseParticipationListResponse;
 import com.project.auth.model.dto.UserInfoDto;
 import com.project.auth.service.UserService;
 import com.project.exercise.service.ExerciseParticipationService;
@@ -45,5 +46,15 @@ public class UserController {
                 authInfo.getId(),
                 dto
         ));
+    }
+
+    @GetMapping("/participation")
+    @ApiOperation("날짜 별 내가 참가한 운동영상 가져오기")
+    public SimpleExerciseParticipationListResponse getMyParticipation(
+            @Authenticated AuthInfo authInfo,
+            @RequestParam String date
+    ) throws ParseException {
+        return new SimpleExerciseParticipationListResponse(exerciseParticipationService.getUserParticipation(
+                authInfo.getId(), date));
     }
 }
