@@ -17,4 +17,6 @@ public interface ExerciseParticipationRepository extends JpaRepository<ExerciseP
     List<ExerciseParticipation> findAllByExerciseOrderByScoreDesc(Exercise exercise);
 
     List<ExerciseParticipation> findTop4ByUserAndCreatedAtOrderByScoreDesc(User user, Date createdAt);
+
+    List<ExerciseParticipation> findByUserAndCreatedAt(User user, Date createdAt);
 }

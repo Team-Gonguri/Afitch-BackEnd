@@ -23,6 +23,7 @@ import com.project.exercise.model.repository.ExerciseRepository;
 import com.project.utils.ConnectorUtils;
 import com.project.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,14 @@ public class ExerciseParticipationService {
     }
 
     @Transactional(readOnly = true)
+    public List<SimpleExerciseParticipationDto> getUserParticipation(Long userId,String date) throws ParseException {
+        User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
+        return exerciseParticipationRepository.findByUserAndCreatedAt(user, DateUtils.parseStringToDate(date))
+                .stream().map(SimpleExerciseParticipationDto::new).collect(Collectors.toList());
+
+    }
+
+    @Transactional(readOnly = true)
     public List<SimpleExerciseParticipationDto> getExerciseUserList(Long exerciseId, OrderType type) {
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
         List<ExerciseParticipation> exerciseParticipations;
@@ -90,14 +99,18 @@ public class ExerciseParticipationService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public DetailExerciseParticipationDto saveExerciseUserVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws IOException {
+    public DetailExerciseParticipationDto saveExerciseUserVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws IOException, InterruptedException {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
         String url = s3Manager.uploadFile(video);
         ExerciseParticipation exerciseParticipation = exerciseParticipationRepository.findByExerciseAndUserAndCreatedAt(exercise, user, DateUtils.now()).orElseGet(() -> exerciseParticipationRepository.save(new ExerciseParticipation(url, PublicScope.valueOf(open), exercise, user)));
+        /*
         connectorUtils.send(HttpMethod.POST, visionServerURL+"/similarity?url="+url, new VisionBodyDto(visionService.getPoseData(exercise.getUrl())), VisionBodyDto.class, Double.class)
                 .subscribe(score -> update(score, url, exerciseParticipation));
+        */
 
+        Thread.sleep(10000);
+        update(Math.random()*100,url,exerciseParticipation);
         return new DetailExerciseParticipationDto(exerciseParticipation, url);
     }
 

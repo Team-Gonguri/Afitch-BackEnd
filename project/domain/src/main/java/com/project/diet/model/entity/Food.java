@@ -1,5 +1,6 @@
 package com.project.diet.model.entity;
 
+import com.project.diet.model.entity.enums.FoodType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "food", indexes = {@Index(name = "i_name", columnList = "name"), @Index(name = "i_categories", columnList = "foodCategory")})
+@Table(name = "food", indexes = {@Index(name = "i_name", columnList = "name")})
 public class Food {
 
     @Id
@@ -19,9 +20,6 @@ public class Food {
 
     @Column
     private String name;
-
-    @Column
-    private String foodCategory;
 
     /**
      * 1회 제공량
@@ -34,6 +32,9 @@ public class Food {
      */
     @Column(length = 2)
     private String unit;
+
+    @Enumerated(EnumType.STRING)
+    FoodType foodType;
 
     @Embedded
     private Ingredient ingredients;

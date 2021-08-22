@@ -15,13 +15,6 @@ public class FoodController {
 
     private final FoodService foodService;
 
-    @GetMapping("/categories")
-    @ApiOperation("음식 카테고리 가져오기")
-    @ResponseStatus(HttpStatus.OK)
-    public FoodCategoryResponse getFoodCategories() {
-        return new FoodCategoryResponse(foodService.getFoodCategories());
-    }
-
     @GetMapping("/search")
     @ApiOperation("음식 검색하기")
     @ResponseStatus(HttpStatus.OK)
