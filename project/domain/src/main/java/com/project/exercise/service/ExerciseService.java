@@ -47,10 +47,10 @@ public class ExerciseService {
 
         String url = s3Manager.uploadFile(video);
         Exercise exercise = exerciseRepository.save(new Exercise(null, name, url, category));
-        connectorUtils.send(HttpMethod.GET, visionServerURL + "/vector?url=" + url,PoseDataDto[].class)
+        connectorUtils.send(HttpMethod.GET, visionServerURL + "/vector?url=" + url, PoseDataDto[].class)
                 .subscribe(data -> {
                     try {
-                        visionService.save(url,data);
+                        visionService.save(url, data);
                     } catch (JsonProcessingException e) {
                         throw new UnExpectedError("JsonProcessing Error");
                     }

@@ -62,7 +62,6 @@ public class S3Manager {
         ObjectMetadata metadata = new ObjectMetadata();
         String contentType;
 
-        System.out.println("file = "+ext);
         if(ext.equals("mp4"))
             contentType = "video/mp4";
         else if(ext.equals("webm"))
