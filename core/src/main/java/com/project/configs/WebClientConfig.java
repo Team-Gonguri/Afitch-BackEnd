@@ -19,11 +19,11 @@ public class WebClientConfig {
     public WebClient webClient() {
         ReactorClientHttpConnector clientHttpConnector = new ReactorClientHttpConnector(
                 HttpClient.create()
-                        .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 40000) // ConnectionTimeOut 40초
+                        .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 60000) // ConnectionTimeOut 40초
                         .doOnConnected(
                                 connection -> {
-                                    connection.addHandlerLast(new ReadTimeoutHandler(40000, TimeUnit.MILLISECONDS));
-                                    connection.addHandlerLast(new WriteTimeoutHandler(40000, TimeUnit.MILLISECONDS));
+                                    connection.addHandlerLast(new ReadTimeoutHandler(60000, TimeUnit.MILLISECONDS));
+                                    connection.addHandlerLast(new WriteTimeoutHandler(60000, TimeUnit.MILLISECONDS));
                                 }
                         )
         );

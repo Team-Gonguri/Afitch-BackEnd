@@ -10,7 +10,6 @@ import com.project.exercise.exceptions.ExerciseNotExistsException;
 import com.project.exercise.exceptions.ExerciseUserNotExistsException;
 import com.project.exercise.model.dto.DetailExerciseParticipationDto;
 import com.project.exercise.model.dto.SimpleExerciseParticipationDto;
-import com.project.exercise.model.dto.vision.VectorDto;
 import com.project.exercise.model.dto.vision.VisionBodyDto;
 import com.project.exercise.model.entity.Exercise;
 import com.project.exercise.model.entity.ExerciseComment;
@@ -23,7 +22,6 @@ import com.project.exercise.model.repository.ExerciseRepository;
 import com.project.utils.ConnectorUtils;
 import com.project.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -99,7 +97,7 @@ public class ExerciseParticipationService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public DetailExerciseParticipationDto saveExerciseUserVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws IOException, InterruptedException {
+    public DetailExerciseParticipationDto saveExerciseUserVideo(Long userId, Long exerciseId, MultipartFile video, String open) throws IOException {
         User user = userRepository.findById(userId).orElseThrow(UserNotExistsException::new);
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(ExerciseNotExistsException::new);
         String url = s3Manager.uploadFile(video);
